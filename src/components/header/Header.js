@@ -11,12 +11,13 @@ export default function Header() {
   let handleSubmit = async(e) => {
     e.preventDefault();
     try{
-      let sumbitData = await fetch("localhost:3000/",
+      let sumbitData = await fetch("https://2d694b78-e6ad-4498-bd95-f5bb64a477d2.mock.pstmn.io/post",
         {
           method: "POST",
           body: JSON.stringify({searchKeyword: searchKeyword})
         }
       )
+      console.log(await sumbitData.json())
       let dataJson = await sumbitData.json();
       if (sumbitData.json === 200) {
         setsearchKeyword("")
@@ -29,8 +30,8 @@ export default function Header() {
       setMessage("An error occured, please try later.")
       setsearchKeyword("")
     }
-    console.log(message)
   }
+
   return (
     <div className="header">
         <Link to={`../`}><h1>Food Finder</h1></Link>

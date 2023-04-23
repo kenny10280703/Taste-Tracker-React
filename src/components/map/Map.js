@@ -1,34 +1,35 @@
 import React from 'react'
 import GoogleMapReact from 'google-map-react';
-import restaurantData from '../../restaurantData';
 import Marker from '../marker/Marker';
+import restaurantData from '../../restaurantData';
 
 export default function Map(props) {
   const centre = [props.lat, props.lng]
   const zoom = 17
-  const [restaurants, setRestaurants] = React.useState(restaurantData.data.restaurants.map(restaurant => {
-    return {...restaurant, show: false}
-  }))
-  console.log(restaurants)
+  
+  const [allRestaurants, setAllRestaurants] = React.useState([])
+  React.useEffect(() => {
+    getRestaurants()
+  }, [])
+
+  const getRestaurants = async() => {
+    const res = await fetch("https://2d694b78-e6ad-4498-bd95-f5bb64a477d2.mock.pstmn.io/get?test=123")
+    setAllRestaurants(await res.json())
+    setAllRestaurants(prevState => prevState.restaurants)
+    setAllRestaurants(prevState => {
+      return prevState.map(state => {
+        return {...state, show: false}
+      })
+    })
+  }
+
   function toggle(id) {
-    setRestaurants(prevState => {
+    setAllRestaurants(prevState => {
       return prevState.map(state => {
         return state.id === id ? {...state, show: true} : {...state, show: false}
       })
     })
   }
-  const allRestaurants = restaurants.map(restaurant => {
-    return (
-      <Marker
-      key={restaurant.id} 
-      lat={restaurant.lat}
-      lng={restaurant.lng}
-      restaurantInfo={restaurant}
-      show={restaurant.show}
-      toggle={()=> toggle(restaurant.id)}
-      />
-    )
-  })
 
 
   return (
@@ -38,7 +39,19 @@ export default function Map(props) {
         center={centre}
         zoom={zoom}
       >
-        {allRestaurants}
+        {allRestaurants.map( restaurant => {
+          return (
+            <Marker
+              key={restaurant.id} 
+              lat={restaurant.lat}
+              lng={restaurant.lng}
+              restaurantInfo={restaurant}
+              show={restaurant.show}
+              toggle={()=> toggle(restaurant.id)}
+            />
+          )
+        }
+        )}
       </GoogleMapReact>
     </div>
   )

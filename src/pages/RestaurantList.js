@@ -1,5 +1,4 @@
 import React from 'react'
-import restaurantData from '../restaurantData'
 import Header from '../components/header/Header'
 import PageBody from '../components/pageBody/PageBody'
 import { Link } from 'react-router-dom'
@@ -11,7 +10,13 @@ export default function RestaurantList() {
      * Therefore, this page will get user location again and get a new array of restaurants
      */
     const [location, setLocation] = React.useState()
+    const [allRestaurants, setAllRestaurants] = React.useState([])
+ 
     React.useEffect(() => {
+        getLocation()
+      }, [])
+    
+    const getLocation = () => {
         navigator.geolocation.getCurrentPosition(
             function(position) {
                 setLocation({
@@ -23,25 +28,27 @@ export default function RestaurantList() {
                 console.log(error)
             }
         )
-    }, [])
-    const restaurants = restaurantData.data.restaurants
-    const listItems = restaurants.map(restaurant => {
-        return (<ListItem 
-                    key={restaurant.id}
-                    restaurantInfo={restaurant}
-                />)
-    })
-
-
-    
-      
+    }
+    const getRestaurants = async() => {
+        const res = await fetch("https://2d694b78-e6ad-4498-bd95-f5bb64a477d2.mock.pstmn.io/get?test=123")
+        setAllRestaurants(await res.json())
+        setAllRestaurants(prevState => prevState.restaurants)
+    }
+    console.log(`location is ${location}` + ` restaurants are ${allRestaurants}`)
 
   return (
     <div>
         <Header />
         <PageBody />
         <button><Link to={`../map`}>To map page</Link></button>
-        {listItems}
+        {allRestaurants.map(restaurant => {
+            return (
+                <ListItem
+                    key={restaurant.id}
+                    restaurantInfo={restaurant}
+                />
+            )
+        })}
     </div>
   )
 }
