@@ -32,7 +32,7 @@ export default function Map() {
 
   const getRestaurants = async() => {
     try{
-        const res = await fetch("", 
+        const res = await fetch("https://2d694b78-e6ad-4498-bd95-f5bb64a477d2.mock.pstmn.io/post", 
         {
             method: "POST",
             body: JSON.stringify({lat: centre[0], lng: centre[1]})
@@ -58,7 +58,7 @@ export default function Map() {
   return (
     <div style={{ height: '100vh', width: '100%' }}>
       <GoogleMapReact
-        bootstrapURLKeys={{ key: "AIzaSyB4FivKF39kWR9YGBG7qVflD7xy_Drh5Qk" }}
+        bootstrapURLKeys={{ key: "" }}
         center={centre}
         zoom={zoom}
       >
