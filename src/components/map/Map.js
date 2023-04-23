@@ -35,7 +35,7 @@ export default function Map(props) {
   return (
     <div style={{ height: '100vh', width: '100%' }}>
       <GoogleMapReact
-        bootstrapURLKeys={{ key: "AIzaSyB4FivKF39kWR9YGBG7qVflD7xy_Drh5Qk" }}
+        bootstrapURLKeys={{ key: "" }}
         center={centre}
         zoom={zoom}
       >
