@@ -17,9 +17,9 @@ export default function Header() {
           body: JSON.stringify({searchKeyword: searchKeyword})
         }
       )
-      console.log(await sumbitData.json())
+      console.log(sumbitData)
       let dataJson = await sumbitData.json();
-      if (sumbitData.json === 200) {
+      if (sumbitData.status === 200) {
         setsearchKeyword("")
       } else {
         setsearchKeyword("")
