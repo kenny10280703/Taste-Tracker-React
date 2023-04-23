@@ -16,6 +16,12 @@ export default function RestaurantList() {
         getLocation()
       }, [])
     
+      React.useEffect(() => {
+        if (location) {
+            getRestaurants()
+        }
+      }, [location])
+
     const getLocation = () => {
         navigator.geolocation.getCurrentPosition(
             function(position) {
@@ -29,12 +35,22 @@ export default function RestaurantList() {
             }
         )
     }
+
     const getRestaurants = async() => {
-        const res = await fetch("https://2d694b78-e6ad-4498-bd95-f5bb64a477d2.mock.pstmn.io/get?test=123")
-        setAllRestaurants(await res.json())
-        setAllRestaurants(prevState => prevState.restaurants)
+        try{
+            const res = await fetch("https://2d694b78-e6ad-4498-bd95-f5bb64a477d2.mock.pstmn.io/post", 
+            {
+                method: "POST",
+                body: JSON.stringify({lat: location.lat, lng: location.lng})
+            }
+            )
+            setAllRestaurants(await res.json())
+            setAllRestaurants(prevState => prevState.restaurants)
+        } catch(error) {
+            console.log("error")
+        }
     }
-    console.log(`location is ${location}` + ` restaurants are ${allRestaurants}`)
+
 
   return (
     <div>

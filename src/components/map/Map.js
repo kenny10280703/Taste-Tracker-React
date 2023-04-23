@@ -3,25 +3,47 @@ import GoogleMapReact from 'google-map-react';
 import Marker from '../marker/Marker';
 import restaurantData from '../../restaurantData';
 
-export default function Map(props) {
-  const centre = [props.lat, props.lng]
-  const zoom = 17
-  
+export default function Map() {
+  const [centre, setCentre] = React.useState()
   const [allRestaurants, setAllRestaurants] = React.useState([])
+  const zoom = 17
+
   React.useEffect(() => {
-    getRestaurants()
+    getLocation()
   }, [])
 
+  React.useEffect(() => {
+    if(centre){
+      getRestaurants()
+    }
+  }, [centre])
+
+  const getLocation = () => {
+    navigator.geolocation.getCurrentPosition(
+        function(position) {
+            setCentre([position.coords.latitude, position.coords.longitude])
+        }, 
+        function(error) {
+            console.log(error)
+        }
+    )
+}
+
+
   const getRestaurants = async() => {
-    const res = await fetch("https://2d694b78-e6ad-4498-bd95-f5bb64a477d2.mock.pstmn.io/get?test=123")
-    setAllRestaurants(await res.json())
-    setAllRestaurants(prevState => prevState.restaurants)
-    setAllRestaurants(prevState => {
-      return prevState.map(state => {
-        return {...state, show: false}
-      })
-    })
-  }
+    try{
+        const res = await fetch("", 
+        {
+            method: "POST",
+            body: JSON.stringify({lat: centre[0], lng: centre[1]})
+        }
+        )
+        setAllRestaurants(await res.json())
+        setAllRestaurants(prevState => prevState.restaurants)
+    } catch(error) {
+        console.log("error")
+    }
+}
 
   function toggle(id) {
     setAllRestaurants(prevState => {
@@ -30,12 +52,13 @@ export default function Map(props) {
       })
     })
   }
+  
 
 
   return (
     <div style={{ height: '100vh', width: '100%' }}>
       <GoogleMapReact
-        bootstrapURLKeys={{ key: "" }}
+        bootstrapURLKeys={{ key: "AIzaSyB4FivKF39kWR9YGBG7qVflD7xy_Drh5Qk" }}
         center={centre}
         zoom={zoom}
       >
