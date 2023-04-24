@@ -32,6 +32,7 @@ export default function Header() {
     }
   }
 
+
   return (
     <div className="header">
         <Link to={`../`}><h1>Food Finder</h1></Link>
@@ -45,6 +46,10 @@ export default function Header() {
           <button>Search</button>
           <div className='errorMessage'> {message ? <p>{message}</p> : null} </div>
         </form>
+        <div>
+          <button><Link to={`../login`}>Login</Link></button>
+          <button><Link to={`../signup`}>Signup</Link></button>
+        </div>
     </div>
   )
 }

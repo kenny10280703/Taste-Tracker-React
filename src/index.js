@@ -6,6 +6,8 @@ import Home from './pages/Home'
 import MapPage from './pages/MapPage'
 import RestaurantDetailPage from './pages/RestaurantDetailPage';
 import RestaurantList from './pages/RestaurantList';
+import Login from './pages/Login';
+import Signup from './pages/Signup';
 import {
   createBrowserRouter,
   RouterProvider,
@@ -31,11 +33,11 @@ const router = createBrowserRouter([
   },
   {
     path: "/login",
-    element: <div>Login page</div>
+    element: <Login />
   },
   {
     path: "/signup",
-    element: <div>Sign up page</div>
+    element: <Signup />
   }])
 root.render(
     <RouterProvider router={router}/>

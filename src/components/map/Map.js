@@ -3,7 +3,7 @@ import GoogleMapReact from 'google-map-react';
 import Marker from '../marker/Marker';
 import restaurantData from '../../restaurantData';
 
-export default function Map() {
+export default function Map(props) {
   const [centre, setCentre] = React.useState()
   const [allRestaurants, setAllRestaurants] = React.useState([])
   const zoom = 17
@@ -17,6 +17,8 @@ export default function Map() {
       getRestaurants()
     }
   }, [centre])
+
+
 
   const getLocation = () => {
     navigator.geolocation.getCurrentPosition(

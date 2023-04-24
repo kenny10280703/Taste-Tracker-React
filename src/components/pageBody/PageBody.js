@@ -2,15 +2,24 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 
 export default function PageBody() {
+    const [formData, setFormData] = React.useState({
+        cuisine: "",
+        price: "",
+        rating: ""
+    })
+
   return (
     <div>
         <h1>Restauarnts within a 1 mile radius to you</h1>
         <h3>Filter by: </h3>
         <form>
-            <select id="cusineFilter">
+            <select 
+                id="cusineFilter"
+                name='cuisine'
+                value={formData.cuisine}>
                 <option value="american">American</option>
                 <option value="indian">Indian</option>
-                <option value="Chinese">Chinese</option>
+                <option value="chinese">Chinese</option>
             </select>
             <select id="priceFilter">
                 <option value="<100">Less than 100</option>
