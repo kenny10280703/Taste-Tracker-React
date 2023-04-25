@@ -1,12 +1,25 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 
-export default function PageBody() {
+export default function PageBody(props) {
     const [formData, setFormData] = React.useState({
         cuisine: "",
         price: "",
         rating: ""
     })
+    const { handleChange, value, restaurantInfo } = props
+    const list = Array.from(new Set(restaurantInfo.map(restaurant => restaurant.cuisine))).sort()
+    const cuisines = list.map(c => {
+        return (
+            <option 
+                key={c}
+                value={c}
+            >
+                {c}
+            </option>
+        )
+    })
+
 
   return (
     <div>
@@ -16,23 +29,66 @@ export default function PageBody() {
             <select 
                 id="cusineFilter"
                 name='cuisine'
-                value={formData.cuisine}>
-                <option value="american">American</option>
-                <option value="indian">Indian</option>
-                <option value="chinese">Chinese</option>
+                value={value.cusine}
+                onChange={(event) => {handleChange(event)}}
+            >
+                <option
+                    value="none">
+                    --Select--
+                </option>
+                {cuisines}
             </select>
-            <select id="priceFilter">
-                <option value="<100">Less than 100</option>
-                <option value="100 - 1000">100 to 1000</option>
-                <option value="1000>">Greater than 1000</option>
+            <select 
+                id="priceFilter"
+                name="price"
+                value={value.price}
+                onChange={(event) => {handleChange(event)}}
+            >
+                <option value="none">--Select--</option>
+                <option value="range1">Less than 100</option>
+                <option value="range2">100 to 1000</option>
+                <option value="range3">Greater than 1000</option>
             </select>
-            <select id="ratingFilter">
-                <option value="1star">1 star</option>
-                <option value="2star">2 stars</option>
-                <option value="3star">3 stars</option>
-                <option value="4star">4 stars</option>
-                <option value="5star">5 stars</option>
-            </select>
+           <input
+                type="checkbox"
+                id='star1'
+                name='star1'
+                checked={value.star1}
+                onChange={(event) => {handleChange(event)}}
+            />
+            <label htmlFor='star1'>1 Star</label>
+            <input
+                type="checkbox"
+                id='star2'
+                name='star2'
+                checked={value.star2}
+                onChange={(event) => {handleChange(event)}}
+            />
+            <label htmlFor='star2'>2 Stars</label>
+            <input
+                type="checkbox"
+                id='star3'
+                name='star3'
+                checked={value.star3}
+                onChange={(event) => {handleChange(event)}}
+            />
+            <label htmlFor='star3'>3 Stars</label>
+            <input
+                type="checkbox"
+                id='star4'
+                name='star4'
+                checked={value.star4}
+                onChange={(event) => {handleChange(event)}}
+            />
+            <label htmlFor='star4'>4 Star</label>
+            <input
+                type="checkbox"
+                id='star5'
+                name='star5'
+                checked={value.star5}
+                onChange={(event) => {handleChange(event)}}
+            />
+            <label htmlFor='star5'>5 Stars</label>
         </form>
         <h3>Currently Showing: </h3>
     </div>

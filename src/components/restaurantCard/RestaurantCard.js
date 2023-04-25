@@ -2,7 +2,6 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 
 export default function RestaurantCard(props) {
-    console.log(props)
     const infoWindowStyle = {
     position: 'relative',
     bottom: 150,
