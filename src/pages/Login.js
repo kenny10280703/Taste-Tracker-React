@@ -29,6 +29,7 @@ export default function Login() {
                 value={formData.username}
                 onChange={handleChange}
             />
+            <br />
             <input
                 type='password'
                 placeholder='Password'
@@ -36,6 +37,7 @@ export default function Login() {
                 value={formData.password}
                 onChange={handleChange}
             />
+            <br />
             <input
                 type='text'
                 placeholder='E-mail'
@@ -43,6 +45,7 @@ export default function Login() {
                 value={formData.email}
                 onChange={handleChange}
             />
+            <br />
             <button>Login</button>
         </form>
     </div>

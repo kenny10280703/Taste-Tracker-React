@@ -7,6 +7,11 @@ export default function Signup() {
         password: "",
         email: ""
     })
+    const [error, setError] = React.useState({
+        showError: false,
+        message: ""
+    })
+    const forbiddenChars = /[&<>[]#$]/
     const handleChange = (event) => {
         const { name, value } = event.target
         setFormData(prevFormData => {
@@ -17,6 +22,15 @@ export default function Signup() {
         })
         console.log(formData)
     }
+    const handleSubmit = async(event) => {
+        event.preventDefault()
+        if (!forbiddenChars.test(formData.username)) {
+
+        }
+
+
+    }
+
   return (
     <div>
         <Header />
@@ -29,6 +43,7 @@ export default function Signup() {
                 value={formData.username}
                 onChange={handleChange}
             />
+            <br />
             <input
                 type='password'
                 placeholder='Password'
@@ -36,6 +51,7 @@ export default function Signup() {
                 value={formData.password}
                 onChange={handleChange}
             />
+            <br />
             <input
                 type='text'
                 placeholder='E-mail'
@@ -43,6 +59,7 @@ export default function Signup() {
                 value={formData.email}
                 onChange={handleChange}
             />
+            <br />
             <button>Login</button>
         </form>
     </div>

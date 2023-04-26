@@ -49,46 +49,21 @@ export default function PageBody(props) {
                 <option value="range2">100 to 1000</option>
                 <option value="range3">Greater than 1000</option>
             </select>
-           <input
-                type="checkbox"
-                id='star1'
-                name='star1'
-                checked={value.star1}
+            <select 
+                id="ratingFilter"
+                name="rating"
+                value={value.rating}
                 onChange={(event) => {handleChange(event)}}
-            />
-            <label htmlFor='star1'>1 Star</label>
-            <input
-                type="checkbox"
-                id='star2'
-                name='star2'
-                checked={value.star2}
-                onChange={(event) => {handleChange(event)}}
-            />
-            <label htmlFor='star2'>2 Stars</label>
-            <input
-                type="checkbox"
-                id='star3'
-                name='star3'
-                checked={value.star3}
-                onChange={(event) => {handleChange(event)}}
-            />
-            <label htmlFor='star3'>3 Stars</label>
-            <input
-                type="checkbox"
-                id='star4'
-                name='star4'
-                checked={value.star4}
-                onChange={(event) => {handleChange(event)}}
-            />
-            <label htmlFor='star4'>4 Star</label>
-            <input
-                type="checkbox"
-                id='star5'
-                name='star5'
-                checked={value.star5}
-                onChange={(event) => {handleChange(event)}}
-            />
-            <label htmlFor='star5'>5 Stars</label>
+            >
+                <option value="none">--Select--</option>
+                <option value="2">2 stars or above</option>
+                <option value="2.5">2.5 stars or above</option>
+                <option value="3">3 stars or above</option>
+                <option value="3.5">3.5 stars or above</option>
+                <option value="4">4 stars or above</option>
+                <option value="4.5">4.5 stars or above</option>
+            </select>
+           
         </form>
         <h3>Currently Showing: </h3>
     </div>

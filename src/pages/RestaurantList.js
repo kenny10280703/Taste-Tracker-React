@@ -15,11 +15,6 @@ export default function RestaurantList() {
         cuisine: "none",
         price: "none",
         rating: "none",
-        star1: true,
-        star2: true,
-        star3: true,
-        star4: true,
-        star5: true
       })
  
     React.useEffect(() => {
@@ -68,23 +63,8 @@ export default function RestaurantList() {
     // This function will be passed to Page Body component to keep unified state values in the parent
     const handleChange = (event) => {
         setFilterData(prevFilterData => {
-          const { name, value, type, checked } = event.target
-          if (name === "price") {
-            return {
-              ...prevFilterData,
-              [name]: value
-            }
-          } else if(type === "checkbox") {
-            return {
-              ...prevFilterData,
-              [name]: checked
-            }
-          } else {
-            return {
-              ...prevFilterData,
-              [name]: value
-            }
-          }
+          const { name, value } = event.target
+          return {...prevFilterData, [name]: value}
         })
       }
 
@@ -101,7 +81,7 @@ export default function RestaurantList() {
                 ...state,
                 filtered: true
               }
-            } else if(!equalToRatingFilter(state.rating)) {
+            } else if(filterData.rating != "none" && !inRatingRange(filterData.rating, state.rating)) {
               return {
                 ...state,
                 filtered: true
@@ -132,11 +112,10 @@ export default function RestaurantList() {
         return value >= numberRange.min && value < numberRange.max
       }
   
-      // return true if the rating of that restaurant is selected, return false otherwise
-      const equalToRatingFilter = (rating) => {
-        const roundedRating = Math.round(rating)
-        const propName = "star" + roundedRating
-        return (filterData[propName])
+      // return true if the rating of that restaurant is equal or greater than the selected rating filter
+    const inRatingRange = (filterRating, restaurantRating) => {
+        const roundedRating = (Number(filterRating))
+        return restaurantRating >= roundedRating
       }
 
 
