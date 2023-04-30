@@ -1,6 +1,5 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import App from './App';
 import reportWebVitals from './reportWebVitals';
 import Home from './pages/Home'
 import MapPage from './pages/MapPage'
@@ -12,33 +11,40 @@ import {
   createBrowserRouter,
   RouterProvider,
 } from "react-router-dom";
+import { AppContextProvider } from './AppContext';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 const router = createBrowserRouter([
   {
-    path: "/",
-    element: <Home />
-  },
-  {
-    path: "/map",
-    element: <MapPage />
-  },
-  {
-    path: "/restaurants",
-    element: <RestaurantList />
-  },
-  {
-    path: "/restaurants/:id",
-    element: <RestaurantDetailPage />
-  },
-  {
-    path: "/login",
-    element: <Login />
-  },
-  {
-    path: "/signup",
-    element: <Signup />
-  }])
+    element: <AppContextProvider />,
+    children: [
+      {
+        path: "/",
+        element: <Home />
+      },
+      {
+        path: "/map",
+        element: <MapPage />
+      },
+      {
+        path: "/restaurants",
+        element: <RestaurantList />
+      },
+      {
+        path: "/restaurants/:id",
+        element: <RestaurantDetailPage />
+      },
+      {
+        path: "/login",
+        element: <Login />
+      },
+      {
+        path: "/signup",
+        element: <Signup />
+      }
+    ]
+  }
+])
 root.render(
     <RouterProvider router={router}/>
 );

@@ -2,16 +2,23 @@ import React from 'react'
 import ReactStars from 'react-rating-stars-component'
 import { useParams } from 'react-router-dom'
 import Header from '../components/header/Header'
-import restaurantData from '../restaurantData'
+import ReviewCard from '../components/reviewCard/ReviewCard'
 
 export default function RestaurantDetailPage() {
     // API call, send id to get a restaurant
     const { id } = useParams()
     const [restaurantInfo, setRestaurantInfo] = React.useState({})
     const [formData, setFormData] = React.useState({newRating: 0, newReviewText: ""})
+    const [allReviews, setAllReviews] = React.useState([])
     React.useEffect(() => {
         getInfo()
     },[])
+
+    React.useEffect(() => {
+        if(restaurantInfo) {
+            getReviews()
+        }
+    }, [restaurantInfo])
 
     const getInfo = async() => {
         const res = await fetch(`https://2d694b78-e6ad-4498-bd95-f5bb64a477d2.mock.pstmn.io/get/${id}`)
@@ -19,7 +26,9 @@ export default function RestaurantDetailPage() {
     }
 
     const getReviews = async() => {
-        const res = await fetch()
+        const res = await fetch(`https://2df61d42-c535-41a1-96ab-1d4ea8564f33.mock.pstmn.io/reviews/${id}`)
+        setAllReviews(await res.json())
+        setAllReviews(prevState => prevState.reviews)
     }
 
     const changeRating = (r) => {
@@ -54,6 +63,17 @@ export default function RestaurantDetailPage() {
             }
         })
     }
+
+    const displayReviews = allReviews.map(review => {
+        return (
+            <ReviewCard
+                id={review.id}
+                username={review.username}
+                rating={review.rating}
+                comment={review.comment}
+            />
+        )
+    })
 
     let{ name, rating, cuisine, description, address1, address2, averageDishCost, menu, distance} = restaurantInfo
 
@@ -117,6 +137,7 @@ export default function RestaurantDetailPage() {
                 <button>Post</button>
             </form>
         </div>
+        {displayReviews}
     </div>
   )
 }

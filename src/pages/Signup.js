@@ -7,28 +7,43 @@ export default function Signup() {
         password: "",
         email: ""
     })
-    const [error, setError] = React.useState({
-        showError: false,
-        message: ""
-    })
+    const [message, setMessage] = React.useState()
     const forbiddenChars = /[&<>[]#$]/
     const handleChange = (event) => {
         const { name, value } = event.target
-        setFormData(prevFormData => {
-            return {
-                ...prevFormData,
-                [name] : value
-            }
-        })
-        console.log(formData)
+        if (!forbiddenChars.test(value)) {
+            setMessage(`${name} can not contains the following special characters: /[&<>[]#$`)
+        } else {
+            setFormData(prevFormData => {
+                return {
+                    ...prevFormData,
+                    [name] : value
+                }
+            })
+        }
+        
     }
     const handleSubmit = async(event) => {
         event.preventDefault()
-        if (!forbiddenChars.test(formData.username)) {
-
+        try {
+            const res = await fetch("", 
+            {
+                method: "POST",
+                body: JSON.stringify({
+                    email: formData.email,
+                    username: formData.username,
+                    password: formData.password
+                })
+            })
+            if (res.response === 200) {
+                setMessage("Register successful! Thank you for joining us!")
+            } else {
+                const { message } = res.json()
+                setMessage(message)
+            }
+        } catch (error) {
+            setMessage(error.message)
         }
-
-
     }
 
   return (
@@ -53,7 +68,7 @@ export default function Signup() {
             />
             <br />
             <input
-                type='text'
+                type='email'
                 placeholder='E-mail'
                 name='email'
                 value={formData.email}

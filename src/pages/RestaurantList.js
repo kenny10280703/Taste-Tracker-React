@@ -1,8 +1,10 @@
 import React from 'react'
+import { useContext } from 'react'
 import Header from '../components/header/Header'
 import PageBody from '../components/pageBody/PageBody'
 import { Link } from 'react-router-dom'
 import ListItem from '../components/listItem/ListItem'
+import { AppContext } from '../AppContext'
 
 export default function RestaurantList() {
     /*
@@ -16,6 +18,8 @@ export default function RestaurantList() {
         price: "none",
         rating: "none",
       })
+    
+    const {user} = React.useContext(AppContext)
  
     React.useEffect(() => {
         getLocation()
@@ -54,7 +58,6 @@ export default function RestaurantList() {
             }
             )
             setAllRestaurants(await res.json())
-            setAllRestaurants(prevState => prevState.restaurants)
         } catch(error) {
             console.log("error")
         }
@@ -97,26 +100,27 @@ export default function RestaurantList() {
         })
       }
 
-          // return true if the price falls in the filter range
-    const inPriceRange = (range, value) => {
-        let numberRange
-        if (range === "range1") {
-          numberRange = {min: 1, max: 10}
-        } else if (range == "range2") {
-          numberRange = {min: 11, max: 20}
-        } else if (range === "range3") {
-          numberRange = {min: 21, max: Infinity}
-        } else {
-          numberRange = {min: 1, max: Infinity}
+      // return true if the price falls in the filter range
+      const inPriceRange = (range, value) => {
+          let numberRange
+          if (range === "range1") {
+            numberRange = {min: 1, max: 10}
+          } else if (range == "range2") {
+            numberRange = {min: 11, max: 20}
+          } else if (range === "range3") {
+            numberRange = {min: 21, max: Infinity}
+          } else {
+            numberRange = {min: 1, max: Infinity}
+          }
+          return value >= numberRange.min && value < numberRange.max
         }
-        return value >= numberRange.min && value < numberRange.max
+    
+        // return true if the rating of that restaurant is equal or greater than the selected rating filter
+      const inRatingRange = (filterRating, restaurantRating) => {
+          const roundedRating = (Number(filterRating))
+          return restaurantRating >= roundedRating
       }
-  
-      // return true if the rating of that restaurant is equal or greater than the selected rating filter
-    const inRatingRange = (filterRating, restaurantRating) => {
-        const roundedRating = (Number(filterRating))
-        return restaurantRating >= roundedRating
-      }
+
 
 
   return (

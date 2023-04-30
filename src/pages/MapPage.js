@@ -54,7 +54,6 @@ export default function MapPage (){
         }
         )
         setAllRestaurants(await res.json())
-        setAllRestaurants(prevState => prevState.restaurants)
     } catch(error) {
         console.log("error")
     }
@@ -146,7 +145,7 @@ export default function MapPage (){
             if (!restaurant.filtered) {
               return (
                 <Marker
-                  key={restaurant.id} 
+                  key={restaurant.id}   
                   lat={restaurant.lat}
                   lng={restaurant.lng}
                   restaurantInfo={restaurant}

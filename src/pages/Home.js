@@ -1,6 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import Header from "../components/header/Header.js"
+import Header from '../components/header/Header'
 
 export default function Home() {
     const footer = <div>
@@ -8,8 +8,8 @@ export default function Home() {
     </div>
   return (
     <div>
-        <Header />
-        <h1>What's for dinner?</h1>
+      <Header />
+        <h1>What's for dinner?</h1> 
         {footer}
     </div>
   )
