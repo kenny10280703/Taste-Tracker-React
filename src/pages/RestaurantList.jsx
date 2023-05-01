@@ -51,8 +51,11 @@ export default function RestaurantList() {
 
     const getRestaurants = async() => {
         try{
-            const res = await fetch("localhost:9090/food_finder/restaurants", 
+            const res = await fetch("http://localhost:9090/food_finder/restaurants", 
             {
+                headers: {
+                "Content-Type": "application/json"
+                },
                 method: "POST",
                 body: JSON.stringify({lat: location.lat, lng: location.lng})
             }
