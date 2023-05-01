@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import Header from "../components/header/Header"
+import Header from '../components/Header';
 import PageBody from '../components/pageBody/PageBody'
 import { Link } from 'react-router-dom'
 import GoogleMapReact from 'google-map-react';
@@ -47,13 +47,14 @@ export default function MapPage (){
 
   const getRestaurants = async() => {
     try{
-        const res = await fetch("https://2df61d42-c535-41a1-96ab-1d4ea8564f33.mock.pstmn.io/post", 
+        const res = await fetch("localhost:9090/food_finder/restaurants", 
         {
             method: "POST",
             body: JSON.stringify({lat: centre[0], lng: centre[1]})
         }
         )
         setAllRestaurants(await res.json())
+        console.log(allRestaurants)
     } catch(error) {
         console.log("error")
     }

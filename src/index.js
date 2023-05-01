@@ -7,11 +7,16 @@ import RestaurantDetailPage from './pages/RestaurantDetailPage';
 import RestaurantList from './pages/RestaurantList';
 import Login from './pages/Login';
 import Signup from './pages/Signup';
+import About from './pages/About';
+import theme from './theme';
 import {
-  createBrowserRouter,
-  RouterProvider,
+  BrowserRouter,
+  Route, Routes, createBrowserRouter, RouterProvider
 } from "react-router-dom";
 import { AppContextProvider } from './AppContext';
+import { ThemeProvider } from '@emotion/react';
+import { CssBaseline } from '@mui/material';
+
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 const router = createBrowserRouter([
@@ -46,10 +51,20 @@ const router = createBrowserRouter([
   }
 ])
 root.render(
-    <RouterProvider router={router}/>
+    <ThemeProvider theme={theme}>
+        <CssBaseline />
+        <AppContextProvider>
+        <BrowserRouter>
+                <Routes>
+                    <Route path="/" element={<Home />} />
+                    <Route path="/about" element={<About />} />
+                    <Route path="/map" element={<MapPage />} />
+                    <Route path="/restaurants" element={<RestaurantList />} />
+                    <Route path="/restaurants/:id" element={<RestaurantDetailPage />} />
+                    <Route path="/login" element={<Login />} />
+                    <Route path="/signup" element={<Signup />} />
+                </Routes>
+        </BrowserRouter>
+        </AppContextProvider>
+    </ThemeProvider>
 );
-
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();

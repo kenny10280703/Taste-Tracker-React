@@ -1,7 +1,7 @@
 import React from 'react'
 import ReactStars from 'react-rating-stars-component'
 import { useParams } from 'react-router-dom'
-import Header from '../components/header/Header'
+import Header from '../components/Header'
 import ReviewCard from '../components/reviewCard/ReviewCard'
 
 export default function RestaurantDetailPage() {
@@ -21,12 +21,12 @@ export default function RestaurantDetailPage() {
     }, [restaurantInfo])
 
     const getInfo = async() => {
-        const res = await fetch(`https://2d694b78-e6ad-4498-bd95-f5bb64a477d2.mock.pstmn.io/get/${id}`)
+        const res = await fetch(`http://localhost:9090/food_finder/restaurants/${id}`)
         setRestaurantInfo(await res.json())
     }
 
     const getReviews = async() => {
-        const res = await fetch(`https://2df61d42-c535-41a1-96ab-1d4ea8564f33.mock.pstmn.io/reviews/${id}`)
+        const res = await fetch(`http://localhost:9090/food_finder/restaurants/reviews/${id}`)
         setAllReviews(await res.json())
         setAllReviews(prevState => prevState.reviews)
     }

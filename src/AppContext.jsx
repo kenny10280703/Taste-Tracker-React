@@ -20,7 +20,7 @@ export const AppContextProvider = (props) => {
 
   return (
     <AppContext.Provider value={{ user, token, login, logout }}>
-      <Outlet />
+      {props.children}
     </AppContext.Provider>
   );
 };

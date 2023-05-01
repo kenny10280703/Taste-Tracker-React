@@ -1,6 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import Header from '../components/header/Header'
+import Header from '../components/Header'
+import Footer from '../components/Footer'
 
 export default function Home() {
     const footer = <div>
@@ -10,7 +11,7 @@ export default function Home() {
     <div>
       <Header />
         <h1>What's for dinner?</h1> 
-        {footer}
+      <Footer />
     </div>
   )
 }

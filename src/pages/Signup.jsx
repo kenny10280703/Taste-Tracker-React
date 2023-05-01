@@ -1,54 +1,55 @@
 import React from 'react'
-import Header from '../components/header/Header'
-import { AppContext } from '../AppContext'
+import Header from '../components/Header'
 
-export default function Login() {
-    const { login } = React.useState(AppContext)
+export default function Signup() {
     const [formData, setFormData] = React.useState({
         username: "",
         password: "",
         email: ""
     })
-    const [errorMessage, setErrorMessage] = React.useState("")
+    const [message, setMessage] = React.useState()
+    const forbiddenChars = /[&<>[]#$]/
     const handleChange = (event) => {
         const { name, value } = event.target
-        setFormData(prevFormData => {
-            return {
-                ...prevFormData,
-                [name] : value
-            }
-        })
-        console.log(formData)
+        if (!forbiddenChars.test(value)) {
+            setMessage(`${name} can not contains the following special characters: /[&<>[]#$`)
+        } else {
+            setFormData(prevFormData => {
+                return {
+                    ...prevFormData,
+                    [name] : value
+                }
+            })
+        }
+        
     }
-
-    const handleSubmit = async (event) => {
+    const handleSubmit = async(event) => {
         event.preventDefault()
         try {
             const res = await fetch("", 
             {
                 method: "POST",
                 body: JSON.stringify({
+                    email: formData.email,
                     username: formData.username,
-                    password: formData.password,
-                    email: formData.email
+                    password: formData.password
                 })
             })
-            if (res.status === 200) {
-                const { user, token} = await res.json()
-                login(user, token)
+            if (res.response === 200) {
+                setMessage("Register successful! Thank you for joining us!")
             } else {
-                const { message } = res.json
-                setErrorMessage(message)
+                const { message } = res.json()
+                setMessage(message)
             }
-        } catch(error) {
-            console.log("error during login")
+        } catch (error) {
+            setMessage(error.message)
         }
-
     }
+
   return (
     <div>
         <Header />
-        <h2>Login</h2>
+        <h2>Signup</h2>
         <form>
             <input
                 type='text'
@@ -67,7 +68,7 @@ export default function Login() {
             />
             <br />
             <input
-                type='text'
+                type='email'
                 placeholder='E-mail'
                 name='email'
                 value={formData.email}
