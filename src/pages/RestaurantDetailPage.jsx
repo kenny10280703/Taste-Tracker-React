@@ -21,14 +21,13 @@ export default function RestaurantDetailPage() {
     }, [restaurantInfo])
 
     const getInfo = async() => {
-        const res = await fetch(`http://localhost:9090/food_finder/restaurants/${id}`)
+        const res = await fetch(`https://2df61d42-c535-41a1-96ab-1d4ea8564f33.mock.pstmn.io/get/${id}`)
         setRestaurantInfo(await res.json())
     }
 
     const getReviews = async() => {
         const res = await fetch(`http://localhost:9090/food_finder/restaurants/reviews/${id}`)
         setAllReviews(await res.json())
-        setAllReviews(prevState => prevState.reviews)
     }
 
     const changeRating = (r) => {
@@ -75,7 +74,7 @@ export default function RestaurantDetailPage() {
         )
     })
 
-    let{ name, rating, cuisine, description, address1, address2, averageDishCost, menu, distance} = restaurantInfo
+    let{ name, overallRating, cuisine, address, averageCostOfADish, menu, distance} = restaurantInfo
 
   return (
     <div>
@@ -83,18 +82,18 @@ export default function RestaurantDetailPage() {
         <h2>{name}</h2>
         <div>
             <span style={{color: 'black'}}>
-                {rating}
+                {overallRating}
                 {' '}
             </span>
             <span style={{color: 'orange'}}>
-                {String.fromCharCode(9733).repeat(Math.floor(rating))}
+                {String.fromCharCode(9733).repeat(Math.floor(overallRating))}
             </span>
             <span style={{color: 'grey'}}>
-                {String.fromCharCode(9733).repeat(Math.floor(5 - rating))}
+                {String.fromCharCode(9733).repeat(Math.floor(5 - overallRating))}
             </span>
             <span>
                 {'  '}
-                Average main course price: £{averageDishCost}
+                Average main course price: £{averageCostOfADish}
             </span>
             <span>
                 {'  '}
@@ -104,7 +103,7 @@ export default function RestaurantDetailPage() {
         <br></br>
         <div>
             <span>
-                {address1} {address2}
+                {address}
             </span>
             <span>
                 {'  '}
@@ -112,8 +111,6 @@ export default function RestaurantDetailPage() {
             </span>
         </div>
         <div>
-            <h3>About</h3>
-            {description}
         </div>
         <div>
             <h3>Menu</h3>

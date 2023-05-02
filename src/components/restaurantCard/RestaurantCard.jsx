@@ -27,10 +27,10 @@ export default function RestaurantCard(props) {
                 {' '}
             </span>
             <span style={{color: 'orange'}}>
-                {String.fromCharCode(9733).repeat(Math.floor(props.restaurantInfo.rating))}
+                {String.fromCharCode(9733).repeat(Math.floor(props.restaurantInfo.overallRating))}
             </span>
             <span style={{color: 'grey'}}>
-            {String.fromCharCode(9733).repeat(Math.floor(5 - props.restaurantInfo.rating))}
+            {String.fromCharCode(9733).repeat(Math.floor(5 - props.restaurantInfo.overallRating))}
             </span>
         </div>
         </Link>

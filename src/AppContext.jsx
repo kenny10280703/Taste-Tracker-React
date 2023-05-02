@@ -1,12 +1,11 @@
 import React from 'react';
-import { Navigate, Outlet } from 'react-router-dom';
 
 
 export const AppContext = React.createContext();
 
 export const AppContextProvider = (props) => {
-  const [user, setUser] = React.useState("User");
-  const [token, setToken] = React.useState(null);
+  const [userObj, setUser] = React.useState();
+  const [token, setToken] = React.useState();
   const [filterData, setFilterData] = React.useState({
     cuisine: "Any cuisine"
   })
@@ -19,8 +18,8 @@ export const AppContextProvider = (props) => {
     })
   }
 
-  const login = (user, token) => {
-    setUser(user);
+  const login = (userObj, token) => {
+    setUser(userObj);
     setToken(token);
   };
 
@@ -30,7 +29,7 @@ export const AppContextProvider = (props) => {
   };
 
   return (
-    <AppContext.Provider value={{ user, token, login, logout, filterData, updateFilter }}>
+    <AppContext.Provider value={{ userObj, token, login, logout, filterData, updateFilter }}>
       {props.children}
     </AppContext.Provider>
   );
