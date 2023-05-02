@@ -7,7 +7,7 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { MyContainer, MySlogan } from '../styles.js'
 
 export default function Login() {
-    const { login } = React.useState(AppContext)
+    const { user, token, login } = React.useState(AppContext)
     const [formData, setFormData] = React.useState({
         username: "",
         password: "",
@@ -54,6 +54,8 @@ export default function Login() {
             if (res.status === 200) {
                 const { user, token} = await res.json()
                 login(user, token)
+                console.log(user)
+                console.log(token)
             } else {
                 const { message } = res.json
                 setErrorMessage(message)
