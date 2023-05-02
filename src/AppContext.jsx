@@ -7,6 +7,17 @@ export const AppContext = React.createContext();
 export const AppContextProvider = (props) => {
   const [user, setUser] = React.useState("User");
   const [token, setToken] = React.useState(null);
+  const [filterData, setFilterData] = React.useState({
+    cuisine: "Any cuisine"
+  })
+  const updateFilter = (name, value) => {
+    setFilterData(prevFilterData => {
+      return {
+        ...prevFilterData,
+        [name]: value
+      }
+    })
+  }
 
   const login = (user, token) => {
     setUser(user);
@@ -19,7 +30,7 @@ export const AppContextProvider = (props) => {
   };
 
   return (
-    <AppContext.Provider value={{ user, token, login, logout }}>
+    <AppContext.Provider value={{ user, token, login, logout, filterData, updateFilter }}>
       {props.children}
     </AppContext.Provider>
   );

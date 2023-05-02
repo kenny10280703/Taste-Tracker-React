@@ -9,7 +9,7 @@ function Footer() {
     <CssBaseline />
     <footer>
         <Container sx={{ backgroundColor: 'primary', padding: '35px' }}>
-            <Grid container spacing={3} gutterBottom justifyContent='center' >
+            <Grid container spacing={3} justifyContent='center' >
                 <Grid item>
                     <Facebook />
                 </Grid>

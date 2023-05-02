@@ -2,9 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import reportWebVitals from './reportWebVitals';
 import Home from './pages/Home'
-import MapPage from './pages/MapPage'
 import RestaurantDetailPage from './pages/RestaurantDetailPage';
-import RestaurantList from './pages/RestaurantList';
 import Login from './pages/Login';
 import Signup from './pages/Signup';
 import About from './pages/About';
@@ -28,18 +26,6 @@ const router = createBrowserRouter([
         element: <Home />
       },
       {
-        path: "/map",
-        element: <MapPage />
-      },
-      {
-        path: "/restaurants",
-        element: <RestaurantList />
-      },
-      {
-        path: "/restaurants/:id",
-        element: <RestaurantDetailPage />
-      },
-      {
         path: "/login",
         element: <Login />
       },
@@ -58,8 +44,6 @@ root.render(
                 <Routes>
                     <Route path="/" element={<Home />} />
                     <Route path="/about" element={<About />} />
-                    <Route path="/map" element={<MapPage />} />
-                    <Route path="/restaurants" element={<RestaurantList />} />
                     <Route path="/restaurants/:id" element={<RestaurantDetailPage />} />
                     <Route path="/login" element={<Login />} />
                     <Route path="/signup" element={<Signup />} />
