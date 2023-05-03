@@ -5,15 +5,10 @@ import Accordion from '@mui/material/Accordion';
 import AccordionSummary from '@mui/material/AccordionSummary';
 import AccordionDetails from '@mui/material/AccordionDetails';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import GoogleMapReact from 'google-map-react';
-
 
 export default function List() {
     const [location, setLocation] = React.useState()
     const [allRestaurants, setAllRestaurants] = React.useState([])
-    const [directionService, serDirectionService] = React.useState()
-    const [centre, setCentre] = React.useState()
-    const zoom = 17
 
     React.useEffect(() => {
         getLocation()
@@ -32,7 +27,6 @@ export default function List() {
                 lat: position.coords.latitude,
                 lng: position.coords.longitude
                 })
-                setCentre([position.coords.latitude, position.coords.longitude])
             }, 
             function(error) {
                 console.log(error)
@@ -57,44 +51,10 @@ export default function List() {
         }
     }
 
-    const handleApiLoaded = (map, maps) => {
-        const dr = new maps.DirectionsService()
-        serDirectionService(dr)
-        console.log(directionService)
-    }
 
-    const GetWalkingTime = ({origin, destination}) => {
-        if (directionService) {
-            const request = {
-                origin: origin,
-                destination: destination,
-                travelMode: 'WALKING'
-            }
-            directionService.route(request, (result, status) => {
-                if (status === 'OK') {
-                    return (result.routes[0].legs[0].duration.text)
-                } else {
-                    console.error(`Directions request failed due to ${status}`)
-                    return null
-                }
-            })
-        } else { return null}
-    }
 
     return (
         <div>
-        <GoogleMapReact 
-            bootstrapURLKeys={{ key: "" }}
-            center={centre}
-            zoom={zoom}
-            yesIWantToUseGoogleMapApiInternals
-            onGoogleApiLoaded={({ map, maps }) => handleApiLoaded(map, maps)}
-            apiOptions={{
-                mapTypeId: 'none', 
-                streetViewControl: false, 
-                zoomControl: false 
-                }}
-        />
         <MyCardGrid maxWidth='md'>
             <Grid container spacing={4}>
                 {allRestaurants.map(restaurant => (
@@ -122,7 +82,7 @@ export default function List() {
                                             Distance in metres: {restaurant.distanceFromUser}m
                                         </Typography>
                                         <Typography gutterBottom>
-                                            Approximate walking time:
+                                            Approximate walking time: {restaurant.walkingTime}
                                         </Typography>
                                         <div>
                                             <Grid container spacing={2}>

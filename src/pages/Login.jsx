@@ -5,6 +5,7 @@ import { AppContext } from '../AppContext'
 import { Button, TextField, FormControlLabel, Checkbox, Link, Grid, CssBaseline, Container, Typography, Card, Box, CardMedia } from '@mui/material';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { MyContainer, MySlogan } from '../styles.js'
+import { Navigate } from 'react-router-dom';
 
 export default function Login() {
     const { userObj, token, login } = React.useContext(AppContext)
@@ -43,8 +44,11 @@ export default function Login() {
     const handleSubmit = async (event) => {
         event.preventDefault()
         try {
-            const res = await fetch("http://localhost:9090", 
+            const res = await fetch("http://localhost:9090/food_finder/users/login", 
             {
+                headers: {
+                  "Content-Type": "application/json"
+                },
                 method: "POST",
                 body: JSON.stringify({
                     username: formData.username,
@@ -66,6 +70,7 @@ export default function Login() {
     }
   return (
     <div>
+      {userObj && <Navigate replace to="/"/>}
         <CssBaseline />
       <div ref={headerRef}>
       <Header  />
