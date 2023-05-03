@@ -58,7 +58,6 @@ export default function Map() {
     const getRestaurants = async() => {
     try{
         console.log(JSON.stringify({lat: centre[0], lng: centre[1]}))
-        const res = await fetch("http://localhost:9090/food_finder/restaurants", 
         {
             headers: {
             "Content-Type": "application/json"

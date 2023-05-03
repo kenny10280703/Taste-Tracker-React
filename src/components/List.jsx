@@ -37,6 +37,7 @@ export default function List() {
     const getRestaurants = async() => {
         try{
             const res = await fetch("http://localhost:9090/food_finder/restaurants", 
+            const res = await fetch("https://2df61d42-c535-41a1-96ab-1d4ea8564f33.mock.pstmn.io/post", 
             {
                 headers: {
                 "Content-Type": "application/json"

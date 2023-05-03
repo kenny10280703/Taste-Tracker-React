@@ -13,7 +13,10 @@ export default function Login() {
         username: "",
         password: "",
     })
-    const [errorMessage, setErrorMessage] = React.useState("")
+    const [status, setStatus] = React.useState({
+      sucess: false,
+      message: ""
+    })
 
     /* this gets the height of the header and footer an subtracts it from the total height of the 
     viewport so the footer is positioned at the bottom of the page */
@@ -38,7 +41,6 @@ export default function Login() {
                 [name] : value
             }
         })
-        console.log(formData)
     }
 
     const handleSubmit = async (event) => {
@@ -62,7 +64,10 @@ export default function Login() {
                 console.log(token)
             } else {
                 const { message } = res.json
-                setErrorMessage(message)
+                setStatus({
+                  success: false,
+                  message: message
+                })
             }
         } catch(error) {
             console.log("error during login")
