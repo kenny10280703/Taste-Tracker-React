@@ -5,10 +5,12 @@ import Accordion from '@mui/material/Accordion';
 import AccordionSummary from '@mui/material/AccordionSummary';
 import AccordionDetails from '@mui/material/AccordionDetails';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import loading from '../image/loading.gif'
 
 export default function List() {
     const [location, setLocation] = React.useState()
     const [allRestaurants, setAllRestaurants] = React.useState([])
+    const [loaded, setLoaded] = React.useState(false)
 
     React.useEffect(() => {
         getLocation()
@@ -17,6 +19,7 @@ export default function List() {
     React.useEffect(() => {
         if (location) {
             getRestaurants()
+            setLoaded(true)
         }
       }, [location])
     
@@ -37,7 +40,6 @@ export default function List() {
     const getRestaurants = async() => {
         try{
             const res = await fetch("http://localhost:9090/food_finder/restaurants", 
-            const res = await fetch("https://2df61d42-c535-41a1-96ab-1d4ea8564f33.mock.pstmn.io/post", 
             {
                 headers: {
                 "Content-Type": "application/json"
@@ -47,6 +49,16 @@ export default function List() {
             }
             )
             setAllRestaurants(await res.json())
+            setAllRestaurants(prevState => {
+                return prevState.map(restaurant => {
+                    const imageLinkArray = restaurant.imageLink.split(",")
+                    console.log(imageLinkArray)
+                    return {
+                        ...restaurant,
+                        imageLink: imageLinkArray
+                    }
+                })
+            })
         } catch(error) {
             console.log("error")
         }
@@ -57,13 +69,22 @@ export default function List() {
     return (
         <div>
         <MyCardGrid maxWidth='md'>
+        <Typography align="center" sx={{ alignItems: "center", justifyContent: "center" }}>
+                    {!loaded && 
+                    <div>
+                        <img src={loading} alt='Loading...' />
+                        <br />
+                       Getting your location...
+                    </div>
+                    }
+                </Typography>
             <Grid container spacing={4}>
                 {allRestaurants.map(restaurant => (
                     <Grid item key={restaurant.id} xs={12} sm={6} md={6}>
                         <MyCard>
                             <CardMedia 
                                 component="img"
-                                image={restaurant.imagesLink}
+                                image={restaurant.imageLink[0]}
                                 alt="random"
                                 title='Image title here'
 
@@ -98,13 +119,7 @@ export default function List() {
                                                         </AccordionSummary>
                                                         <AccordionDetails>
                                                         <Typography sx={{ whiteSpace: 'pre-line' }}>
-                                                            Mon 12 - 10:30 pm{'\n'}
-                                                            Tue 12 - 10:30 pm{'\n'}
-                                                            Wed 12 - 10:30 pm{'\n'}
-                                                            Thu 12 - 10:30 pm{'\n'}
-                                                            Fri 12 - 11 pm{'\n'}
-                                                            Sat 9 am - 11 pm{'\n'}
-                                                            Sun 9 am - 11 pm
+                                                            {restaurant.operatingHoursOfTheDay}
                                                         </Typography>
                                                         </AccordionDetails>
                                                     </Accordion>

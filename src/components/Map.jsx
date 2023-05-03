@@ -2,12 +2,15 @@ import React from 'react'
 import Marker from './marker/Marker'
 import GoogleMapReact from 'google-map-react';
 import { AppContext } from '../AppContext';
+import loading from '../image/loading.gif'
+import { Box, Typography } from '@mui/material'
 
 export default function Map() {
     const [centre, setCentre] = React.useState()
     const zoom = 17
     const [allRestaurants, setAllRestaurants] = React.useState([])
     const { filterData } = React.useContext(AppContext)
+    const [loaded, setLoaded] = React.useState(false)
     
     React.useEffect(() => {
         getLocation()
@@ -16,6 +19,7 @@ export default function Map() {
     // make sure that only make API call when user's current location is available
     React.useEffect(() => {
     if(centre){
+        setLoaded(true)
         getRestaurants()
     }
     }, [centre])
@@ -58,6 +62,7 @@ export default function Map() {
     const getRestaurants = async() => {
     try{
         console.log(JSON.stringify({lat: centre[0], lng: centre[1]}))
+        const res = await fetch("http://localhost:9090/food_finder/restaurants", 
         {
             headers: {
             "Content-Type": "application/json"
@@ -84,8 +89,17 @@ export default function Map() {
     return (
         <div>
             <div style={{ height: '75vh', width: '100%' }}>
+                <Typography align="center" sx={{ alignItems: "center", justifyContent: "center" }}>
+                    {!loaded && 
+                    <div>
+                        <img src={loading} alt='Loading...' />
+                        <br />
+                       <h2>Getting your location...</h2> 
+                    </div>
+                    }
+                </Typography>
                 <GoogleMapReact
-                    bootstrapURLKeys={{ key: "" }}
+                    bootstrapURLKeys={{ key: "AIzaSyB4FivKF39kWR9YGBG7qVflD7xy_Drh5Qk" }}
                     center={centre}
                     zoom={zoom}
                 >
