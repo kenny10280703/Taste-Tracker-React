@@ -2,8 +2,10 @@ import React from 'react'
 import { Button, Grid, Container, CssBaseline } from '@mui/material';
 import { Facebook, Instagram, Twitter } from '@mui/icons-material';
 import { Link } from "react-router-dom";
+import { AppContext } from '../AppContext';
 
 function Footer() {
+    const { userObj, logout } = React.useContext(AppContext)
   return (
     <>
     <CssBaseline />
@@ -28,12 +30,13 @@ function Footer() {
                     <Button component={Link} to='/about' variant='text' color='primary' >
                         About
                     </Button>
-                    <Button component={Link} to='/login' variant='text' color='primary'>
+                    { !userObj && <Button component={Link} to='/login' variant='text' color='primary'>
                         Login
-                    </Button>
-                    <Button component={Link} to='/signup' variant='text' color='primary' sx={{ whiteSpace: 'nowrap' }}>
+                    </Button> }
+                    { !userObj && <Button component={Link} to='/signup' variant='text' color='primary' sx={{ whiteSpace: 'nowrap' }}>
                         Sign up
-                    </Button>
+                    </Button> }
+
                 </nav>
             </Grid>
         </Container>
