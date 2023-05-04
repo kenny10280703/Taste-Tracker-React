@@ -5,7 +5,12 @@ import { Link } from "react-router-dom";
 import { AppContext } from '../AppContext';
 
 function Footer() {
+    /* 
+    Get the user's object from AppContext to determine if the user is logged in.
+    If user is logged in, will hide the Login and Signup button;
+    */
     const { userObj, logout } = React.useContext(AppContext)
+
   return (
     <>
     <CssBaseline />

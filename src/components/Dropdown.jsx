@@ -22,17 +22,13 @@ export default function Dropdown() {
 
   /*These are functions that handle click events for the button and menu items, 
   toggling the state of open and selectedIndex, and closing the menu when a user clicks outside of it.*/
-
-  const handleClick = () => {
-    console.info(`You clicked ${options[selectedIndex]}`)
-  };
-
+  
+  //In addition to UI interaction, this function also update the filter value in AppContext
   const handleMenuItemClick = (event, index) => {
     const { name, value } = event.currentTarget.dataset
     setSelectedIndex(index);
     setOpen(false);
     updateFilter(name, value)
-    console.log(filterData)
   };
 
   const handleToggle = () => {
@@ -52,7 +48,7 @@ export default function Dropdown() {
     and a secondary button that opens a dropdown menu containing the list of options. */
     <React.Fragment>
       <ButtonGroup ref={anchorRef} aria-label="split button">
-        <Button onClick={handleClick}>{options[selectedIndex]}</Button>
+        <Button>{options[selectedIndex]}</Button>
         <Button
           size="small"
           aria-controls={open ? 'split-button-menu' : undefined}

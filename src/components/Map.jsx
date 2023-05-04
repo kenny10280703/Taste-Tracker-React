@@ -10,46 +10,59 @@ export default function Map() {
     const zoom = 17
     const [allRestaurants, setAllRestaurants] = React.useState([])
     const { filterData } = React.useContext(AppContext)
+    // if loaded is false, will display the loading animation
     const [loaded, setLoaded] = React.useState(false)
     const hoverDistance = 35
+    const api_key = process.env.REACT_APP_API_KEY
     
+    // Use React Effect to get user's location, no dependencies means only get user's location once
     React.useEffect(() => {
         getLocation()
       }, [])
     
-    // make sure that only make API call when user's current location is available
+    // Use React useEffect to make sure only fetch backend API to get restaurants after getting user's location
     React.useEffect(() => {
     if(centre){
+        // change loaded to true after getting user's location
         setLoaded(true)
         getRestaurants()
     }
     }, [centre])
 
+    /* Use React useEffect to make filterData as dependencies, which means if filter is changed, will run the function to change
+    restaurants displayed */
     React.useEffect(() => {
         updateRestaurantsShown()
         console.log(allRestaurants)
       }, [filterData])
 
-   const updateRestaurantsShown = () => {
-        setAllRestaurants(prevState => {
-          return prevState.map(state => {
-            if (filterData.cuisine != "Any cuisine" && !(state.cuisine === filterData.cuisine)) {
-              return {
-                ...state,
-                filtered: true
-              }
-            } else {
+    /* 
+    Update the restaurants to be displayed. Add a Boolean property filtered to all restaurants, and match the restaurant's info against the filter.
+    If it does not match, filtered will be true, vice versa.
+    */ 
+    const updateRestaurantsShown = () => {
+            setAllRestaurants(prevState => {
+            return prevState.map(state => {
+                if (filterData.cuisine != "Any cuisine" && !(state.cuisine === filterData.cuisine)) {
                 return {
-                ...state,
-                filtered: false
-              }
-            }
-            }
-          )
-        })
-      }
-    
-    
+                    ...state,
+                    filtered: true
+                }
+                } else {
+                    return {
+                    ...state,
+                    filtered: false
+                }
+                }
+                }
+            )
+            })
+        }
+
+    /* 
+    Get user's location with Javascript's Geolocation API. Using precision location to make sure restaurants are actually within
+    1 mile of user's locationm, which affects performance
+    */
     const getLocation = () => {
         navigator.geolocation.getCurrentPosition( position => {
             setCentre([position.coords.latitude, position.coords.longitude])
@@ -60,23 +73,27 @@ export default function Map() {
         )
     }
 
+    // Get an array of restaurants by fetching backend API
     const getRestaurants = async() => {
     try{
-        console.log(JSON.stringify({lat: centre[0], lng: centre[1]}))
-        const res = await fetch("http://localhost:9090/food_finder/restaurants", 
+        const res = await fetch("https://2df61d42-c535-41a1-96ab-1d4ea8564f33.mock.pstmn.io/post", 
         {
             headers: {
             "Content-Type": "application/json"
             },
             method: "POST",
-            body: JSON.stringify({lat: centre[0], lng: centre[1]})
+            body: JSON.stringify({latitude: centre[0], longitude: centre[1]})
         }
         )
+        // the array of restaurants is stored in the React State allRestaurants
         setAllRestaurants(await res.json())
+        /*
+        restaurants may has more than 1 image, backend will include all image links in a single string separated with ","
+        so frontend need to split the string and convert it to an array of image links
+        */
         setAllRestaurants(prevState => {
             return prevState.map(restaurant => {
                 const imageLinkArray = restaurant.imageLink.split(",")
-                console.log(imageLinkArray)
                 return {
                     ...restaurant,
                     imageLink: imageLinkArray
@@ -88,18 +105,26 @@ export default function Map() {
     }
     }
 
+    /* Function to toggle the restaurant card when user click the marker. 
+    This function will show the selected restaurant's card and close all the shown Markers
+    This function pass down to the Marker components and takes the Marker's id as parameter
+    */ 
     function toggle(id) {
     setAllRestaurants(prevState => {
         return prevState.map(state => {
+        // make sure that the correct marker is toggled.
         return state.id === id ? {...state, show: true} : {...state, show: false}
         })
     })
     }
 
+    // function to close the restaurant card when user click the Close Icon
+    //  This function pass down to the Restaurant Card component
     const close = (event) => {
         event.stopPropagation()
         setAllRestaurants(prevState => {
             return prevState.map(state => {
+            // Given that only 1 restaurant card is display at a time, no need to match the restaurant card with correct id
             return {...state, show: false}
             })
         })
@@ -118,7 +143,7 @@ export default function Map() {
                     }
                 </Typography>
                 <GoogleMapReact
-                    bootstrapURLKeys={{ key: "" }}
+                    bootstrapURLKeys={{ key: {api_key}}}
                     center={centre}
                     zoom={zoom}
                     hoverDistance={hoverDistance}

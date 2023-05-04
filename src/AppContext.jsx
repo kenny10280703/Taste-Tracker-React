@@ -3,7 +3,11 @@ import React from 'react';
 
 export const AppContext = React.createContext();
 
+
+
+// Use React Context to allow easy access of filter, user object, token, login and logout function from different components
 export const AppContextProvider = (props) => {
+  // userObj contains the user object, which contains the username property
   const [userObj, setUser] = React.useState();
   const [token, setToken] = React.useState();
   const [filterData, setFilterData] = React.useState({

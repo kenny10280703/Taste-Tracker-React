@@ -9,7 +9,8 @@ import { Box, Button, Card, CardMedia, CssBaseline, Grid, Typography, Container 
 import { MyContainer, MySlogan } from '../styles';
 
 
-export default function Home() {
+export default function Home() {  
+    
   const [isMapView, setIsMapView] = React.useState(true);
 
     const toggleView = () => {

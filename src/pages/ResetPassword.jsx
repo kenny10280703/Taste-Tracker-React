@@ -6,6 +6,7 @@ import { Button, TextField, FormControlLabel, Checkbox, Link, Grid, CssBaseline,
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { MyContainer, MySlogan } from '../styles.js'
 import { Navigate } from 'react-router-dom';
+import theme from '../theme.jsx'
 
 export default function ResetPassword() {
     const [formData, setFormData] = React.useState({
@@ -17,7 +18,6 @@ export default function ResetPassword() {
     })
     const mainRef = React.useRef(null);
     const headerRef = React.useRef(null);
-    const theme = createTheme();
     const { userObj } = React.useContext(AppContext)
 
     React.useEffect(() => {

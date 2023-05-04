@@ -10,24 +10,35 @@ import loading from '../image/loading.gif'
 export default function List() {
     const [location, setLocation] = React.useState()
     const [allRestaurants, setAllRestaurants] = React.useState([])
+    // if loaded is false, will display the loading animation
     const [loaded, setLoaded] = React.useState(false)
 
+    /* 
+    To accurately show restaurants within one mile, will assume user may move while switching from Map View to List View,
+    so list view will get user's location again
+    */
     React.useEffect(() => {
         getLocation()
       }, [])
     
+    // Use React useEffect to make sure only fetch backend API to get restaurants after getting user's location
     React.useEffect(() => {
+        // change loaded to true after getting user's location
         if (location) {
             getRestaurants()
             setLoaded(true)
         }
       }, [location])
     
+        /* 
+        Get user's location with Javascript's Geolocation API. Using precision location to make sure restaurants are actually within
+        1 mile of user's locationm, which affects performance
+        */
       const getLocation = () => {
         navigator.geolocation.getCurrentPosition( position => {
             setLocation({
-                lat: position.coords.latitude, 
-                lng: position.coords.longitude
+                latitude: position.coords.latitude, 
+                longitude: position.coords.longitude
             })
         }, error => {
             // show dialog box to user and then refresh the page when user closed the box
@@ -36,22 +47,27 @@ export default function List() {
         )
     }
 
+    // Get an array of restaurants by fetching backend API
     const getRestaurants = async() => {
         try{
-            const res = await fetch("http://localhost:9090/food_finder/restaurants", 
+            const res = await fetch("http://2df61d42-c535-41a1-96ab-1d4ea8564f33.mock.pstmn.io/post", 
             {
                 headers: {
                 "Content-Type": "application/json"
                 },
                 method: "POST",
-                body: JSON.stringify({lat: location.lat, lng: location.lng})
+                body: JSON.stringify({latitude: location.latitude, longitude: location.longitude})
             }
             )
+            // the array of restaurants is stored in the React State allRestaurants
             setAllRestaurants(await res.json())
+            /*
+            Restaurants may has more than 1 image, backend will include all image links in a single string separated with ","
+            so frontend need to split the string and convert it to an array of image links
+            */
             setAllRestaurants(prevState => {
                 return prevState.map(restaurant => {
                     const imageLinkArray = restaurant.imageLink.split(",")
-                    console.log(imageLinkArray)
                     return {
                         ...restaurant,
                         imageLink: imageLinkArray

@@ -20,7 +20,7 @@ export default function RestaurantCard(props) {
 
   return (
     <div style={infoWindowStyle}>
-        <Card sx={{width: 200, maxWidth: 200}}>
+        <Card sx={{width: 200, maxWidth: 200, boxShadow: '1px 1px 5px grey'}}>
         <Box display="flex" flexDirection="row" justifyContent="flex-end">
             <IconButton size='small' onClick={close} >
                 <CloseIcon />
