@@ -23,17 +23,16 @@ export default function List() {
         }
       }, [location])
     
-    const getLocation = () => {
-        navigator.geolocation.getCurrentPosition(
-            function(position) {
-                setLocation({
-                lat: position.coords.latitude,
+      const getLocation = () => {
+        navigator.geolocation.getCurrentPosition( position => {
+            setLocation({
+                lat: position.coords.latitude, 
                 lng: position.coords.longitude
-                })
-            }, 
-            function(error) {
-                console.log(error)
-            }
+            })
+        }, error => {
+            // show dialog box to user and then refresh the page when user closed the box
+            if(!alert('Please allow the web browser to access your location!')){window.location.reload()}
+        }
         )
     }
 
@@ -74,7 +73,7 @@ export default function List() {
                     <div>
                         <img src={loading} alt='Loading...' />
                         <br />
-                       Getting your location...
+                       <h2>Getting your location...</h2> 
                     </div>
                     }
                 </Typography>

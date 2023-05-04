@@ -70,7 +70,10 @@ export default function Login() {
                 })
             }
         } catch(error) {
-            console.log("error during login")
+            setStatus({
+              success: false,
+              message: error.message
+            })
         }
     }
   return (
@@ -138,6 +141,7 @@ export default function Login() {
                     control={<Checkbox value="remember" color="primary" />}
                     label="Remember me"
                   />
+                  <Box sx={{color: 'red'}}>{status.message}</Box>
                   <Button
                     type="submit"
                     fullWidth
@@ -149,12 +153,12 @@ export default function Login() {
                   </Button>
                   <Grid container>
                     <Grid item xs>
-                      <Link href="#" variant="body2">
+                      <Link href="/resetpassword" variant="body2">
                         Forgot password?
                       </Link>
                     </Grid>
                     <Grid item>
-                      <Link href="#" variant="body2">
+                      <Link href="/signup" variant="body2">
                         {"Don't have an account? Sign Up"}
                       </Link>
                     </Grid>

@@ -1,9 +1,9 @@
 import React from 'react'
-import Marker from './marker/Marker'
+import Marker from './Marker'
 import GoogleMapReact from 'google-map-react';
 import { AppContext } from '../AppContext';
 import loading from '../image/loading.gif'
-import { Box, Typography } from '@mui/material'
+import { Typography } from '@mui/material'
 
 export default function Map() {
     const [centre, setCentre] = React.useState()
@@ -11,6 +11,7 @@ export default function Map() {
     const [allRestaurants, setAllRestaurants] = React.useState([])
     const { filterData } = React.useContext(AppContext)
     const [loaded, setLoaded] = React.useState(false)
+    const hoverDistance = 35
     
     React.useEffect(() => {
         getLocation()
@@ -47,17 +48,17 @@ export default function Map() {
           )
         })
       }
-
+    
+    
     const getLocation = () => {
-    navigator.geolocation.getCurrentPosition(
-        function(position) {
+        navigator.geolocation.getCurrentPosition( position => {
             setCentre([position.coords.latitude, position.coords.longitude])
-        }, 
-        function(error) {
-            console.log(error)
+        }, error => {
+            // show dialog box to user and then refresh the page when user closed the box
+            if(!alert('Please allow the web browser to access your location!')){window.location.reload()}
         }
-    )
-        }
+        )
+    }
 
     const getRestaurants = async() => {
     try{
@@ -72,7 +73,16 @@ export default function Map() {
         }
         )
         setAllRestaurants(await res.json())
-        console.log(allRestaurants)
+        setAllRestaurants(prevState => {
+            return prevState.map(restaurant => {
+                const imageLinkArray = restaurant.imageLink.split(",")
+                console.log(imageLinkArray)
+                return {
+                    ...restaurant,
+                    imageLink: imageLinkArray
+                }
+            })
+        })
     } catch(error) {
         console.log("error")
     }
@@ -84,6 +94,15 @@ export default function Map() {
         return state.id === id ? {...state, show: true} : {...state, show: false}
         })
     })
+    }
+
+    const close = (event) => {
+        event.stopPropagation()
+        setAllRestaurants(prevState => {
+            return prevState.map(state => {
+            return {...state, show: false}
+            })
+        })
     }
 
     return (
@@ -99,9 +118,10 @@ export default function Map() {
                     }
                 </Typography>
                 <GoogleMapReact
-                    bootstrapURLKeys={{ key: "AIzaSyB4FivKF39kWR9YGBG7qVflD7xy_Drh5Qk" }}
+                    bootstrapURLKeys={{ key: "" }}
                     center={centre}
                     zoom={zoom}
+                    hoverDistance={hoverDistance}
                 >
                 {allRestaurants.map( restaurant => {
                     if (!restaurant.filtered) {
@@ -113,6 +133,7 @@ export default function Map() {
                             restaurantInfo={restaurant}
                             show={restaurant.show}
                             toggle={()=> toggle(restaurant.id)}
+                            close={close}
                             />
                         )
                     }
