@@ -85,20 +85,6 @@ export default function Map() {
         )
         // the array of restaurants is stored in the React State allRestaurants
         setAllRestaurants(await res.json())
-        //setAllRestaurants(await res.json())
-        /*
-        restaurants may has more than 1 image, backend will include all image links in a single string separated with ","
-        so frontend need to split the string and convert it to an array of image links
-        */
-        setAllRestaurants(prevState => {
-            return prevState.map(restaurant => {
-                const imagesLinkArray = restaurant.imagesLink.split(",")
-                return {
-                    ...restaurant,
-                    imagesLink: imagesLinkArray
-                }
-            })
-        })
     } catch(error) {
         console.log(error.message)
     }
