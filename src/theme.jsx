@@ -1,10 +1,12 @@
 import { createTheme, responsiveFontSizes } from '@mui/material';
 
+/* Sets the theme of the website */
+
 const theme = createTheme({
     palette: {
         primary: {
             main: '#1F1F1F',
-        }, // dark grey #1F1F1F
+        },
         secondary: {
             main: '#FFFFFF',
         }

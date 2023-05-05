@@ -28,7 +28,7 @@ function About() {
         <div>
           <Container>
             <Typography variant='h5' align='center' color='textSecondary' paragraph>
-            Welcome to Menu Map, the go-to website for students new to the city looking for the best restaurants nearby. Our platform makes it easy to find delicious food options in your area with just a few clicks. Whether you're in the mood for a quick bite or a fancy dinner, Menu Map has got you covered. We strive to provide you with accurate and up-to-date information about local restaurants, including their menus, opening hours, and user ratings. So, whether you're new to the city or just looking for something new, let Menu Map be your guide to the culinary scene!
+            Welcome to Taste Tracker, the go-to website for students new to the city looking for the best restaurants nearby. Our platform makes it easy to find delicious food options in your area with just a few clicks. Whether you're in the mood for a quick bite or a fancy dinner, Taste Tracker has got you covered. We strive to provide you with accurate and up-to-date information about local restaurants, including their menus, opening hours, and user ratings. So, whether you're new to the city or just looking for something new, let Taste Tracker be your guide to the culinary scene!
             </Typography>
           </Container>
         </div>

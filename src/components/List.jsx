@@ -1,10 +1,7 @@
 import React from 'react'
-import { Grid, CardMedia, Typography, Button, Container, Rating, Box, Stack } from '@mui/material';
-import { MyCard, MyCardGrid, MyCardContent } from '../styles';
-import Accordion from '@mui/material/Accordion';
-import AccordionSummary from '@mui/material/AccordionSummary';
-import AccordionDetails from '@mui/material/AccordionDetails';
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import { Box, Button, CardMedia, Container, Grid, Rating, Stack, Typography } from '@mui/material';
+import { MyBold, MyCard, MyCardContent } from '../styles';
+import { Link } from "react-router-dom";
 import loading from '../image/loading.gif'
 
 export default function List() {
@@ -50,7 +47,7 @@ export default function List() {
     // Get an array of restaurants by fetching backend API
     const getRestaurants = async() => {
         try{
-            const res = await fetch("http://2df61d42-c535-41a1-96ab-1d4ea8564f33.mock.pstmn.io/post", 
+            const res = await fetch("http://localhost:9090/food_finder/restaurants", 
             {
                 headers: {
                 "Content-Type": "application/json"
@@ -67,10 +64,10 @@ export default function List() {
             */
             setAllRestaurants(prevState => {
                 return prevState.map(restaurant => {
-                    const imageLinkArray = restaurant.imageLink.split(",")
+                    const imagesLinkArray = restaurant.imagesLink.split(",")
                     return {
                         ...restaurant,
-                        imageLink: imageLinkArray
+                        imagesLink: imagesLinkArray
                     }
                 })
             })
@@ -79,78 +76,60 @@ export default function List() {
         }
     }
 
+    // Defines a function to scroll to the top of the page
+    const scrollToTop = () => {
+        window.scrollTo({
+            top: 0,
+    })};
+
 
 
     return (
         <div>
-        <MyCardGrid maxWidth='md'>
+        <Box sx={{ mt: '40px' }}>
+        {/* show the loading animation of loaded is false*/}
         <Typography align="center" sx={{ alignItems: "center", justifyContent: "center" }}>
-                    {!loaded && 
-                    <div>
-                        <img src={loading} alt='Loading...' />
-                        <br />
-                       <h2>Getting your location...</h2> 
-                    </div>
-                    }
-                </Typography>
+            {!loaded && 
+                <div>
+                    <img src={loading} alt='Loading...' />
+                    <br />
+                    <h2>Getting your location...</h2> 
+                </div>
+            }
+            </Typography>
             <Grid container spacing={4}>
-                {allRestaurants.map(restaurant => (
-                    <Grid item key={restaurant.id} xs={12} sm={6} md={6}>
+                {/* Map over the array of resturants and display each one */}
+                {allRestaurants.map((restaurant) => (
+                    <Grid item key={restaurant.id} xs={12} sm={6} md={4}>
+                        {/* Displays a card */}
                         <MyCard>
                             <CardMedia 
                                 component="img"
-                                image={restaurant.imageLink[0]}
-                                alt="random"
+                                image={restaurant.imagesLink[0]}
+                                alt="loading..."
                                 title='Image title here'
-
                             /> 
-                            <MyCardContent >
-                                    <Typography gutterBottom variant='h5' sx={{ ml: '15px', mt: '10px' }}>
-                                        {restaurant.name}
-                                    </Typography>
-                                    <Stack spacing={1} sx={{ ml: 2, mt: 1, mb: 1 }}>
-                                        <Rating name="half-rating-read" defaultValue={restaurant.overallRating} precision={0.5} readOnly />
-                                    </Stack>
-                                    <Container gutterBottom variant='h6'>
-                                        <Typography>
-                                            Average cost of main dish: £{restaurant.averageCostOfADish}
-                                        </Typography>
-                                        <Typography>
-                                            Distance in metres: {restaurant.distanceFromUser}m
-                                        </Typography>
-                                        <Typography gutterBottom>
-                                            Approximate walking time: {restaurant.walkingTime}
-                                        </Typography>
-                                        <div>
-                                            <Grid container spacing={2}>
-                                                <Grid item>
-                                                    <Accordion sx={{ boxShadow: '1px 1px 5px grey', width: '18vw', mb: '30px' }}>
-                                                        <AccordionSummary
-                                                        expandIcon={<ExpandMoreIcon />}
-                                                        aria-controls="panel1a-content"
-                                                        id="panel1a-header"
-                                                        >
-                                                        <Typography>Opening times</Typography>
-                                                        </AccordionSummary>
-                                                        <AccordionDetails>
-                                                        <Typography sx={{ whiteSpace: 'pre-line' }}>
-                                                            {restaurant.operatingHoursOfTheDay}
-                                                        </Typography>
-                                                        </AccordionDetails>
-                                                    </Accordion>
-                                                </Grid>
-                                                <Grid item>
-                                                    <Button variant='contained' size='small' color='primary' sx={{ mt: '7px' }}>Go to website</Button>
-                                                </Grid>
-                                            </Grid>
-                                        </div>
-                                    </Container>
+                            <MyCardContent>
+                                <Typography color='inherit' gutterBottom variant='h5' sx={{ ml: '15px', mt: '10px' }}>
+                                    {restaurant.name}
+                                </Typography>
+                                {/* Display the rating of the restaurant */}
+                                <Stack spacing={1} sx={{ ml: 2, mt: 1, mb: 1 }}>
+                                    <Rating name="rating" defaultValue={restaurant.overallRating} precision={0.5} readOnly />
+                                </Stack>
+                                {/* Display the price and a button to see more details */}
+                                <Container variant='h6' sx={{ mb: '20px' }}>
+                                <Typography gutterBottom>
+                                    <MyBold>Average main price: </MyBold>£{restaurant.overallRating}
+                                </Typography>
+                                <Button component={Link} to={"/restaurants/" + restaurant.id} variant='contained' size='small' color='primary' sx={{ mt: '7px' }} onClick={scrollToTop}>See more details</Button>
+                                </Container>
                             </MyCardContent>
                         </MyCard>
                 </Grid>
                 ))}
             </Grid>
-        </MyCardGrid>
+        </Box>
         </div>
     )
 }

@@ -3,9 +3,11 @@ import { AppBar, Container, CssBaseline, Toolbar } from '@mui/material';
 import MyIconButton from '../styles.js';
 import Navbar from './Navbar';
 
-export default function Header() {
+/* Renders a header component with a logo and a navigation bar. */
+
+function Header() {
   return (
-    <div>
+    <>
     <CssBaseline />
     <AppBar position="relative" sx={{ backgroundColor: 'primary.main' }}>
         <Toolbar>
@@ -17,6 +19,8 @@ export default function Header() {
             </Container>
         </Toolbar>
     </AppBar>
-    </div>
+    </>
   )
 }
+
+export default Header

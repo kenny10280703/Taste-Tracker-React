@@ -33,7 +33,6 @@ export default function Map() {
     restaurants displayed */
     React.useEffect(() => {
         updateRestaurantsShown()
-        console.log(allRestaurants)
       }, [filterData])
 
     /* 
@@ -76,7 +75,7 @@ export default function Map() {
     // Get an array of restaurants by fetching backend API
     const getRestaurants = async() => {
     try{
-        const res = await fetch("https://2df61d42-c535-41a1-96ab-1d4ea8564f33.mock.pstmn.io/post", 
+        const res = await fetch("http://localhost:9090/food_finder/restaurants", 
         {
             headers: {
             "Content-Type": "application/json"
@@ -86,22 +85,23 @@ export default function Map() {
         }
         )
         // the array of restaurants is stored in the React State allRestaurants
-        setAllRestaurants(await res.json())
+        console.log(res.json())
+        //setAllRestaurants(await res.json())
         /*
         restaurants may has more than 1 image, backend will include all image links in a single string separated with ","
         so frontend need to split the string and convert it to an array of image links
         */
         setAllRestaurants(prevState => {
             return prevState.map(restaurant => {
-                const imageLinkArray = restaurant.imageLink.split(",")
+                const imagesLinkArray = restaurant.imagesLink.split(",")
                 return {
                     ...restaurant,
-                    imageLink: imageLinkArray
+                    imagesLink: imagesLinkArray
                 }
             })
         })
     } catch(error) {
-        console.log("error")
+        console.log(error.message)
     }
     }
 
@@ -143,7 +143,7 @@ export default function Map() {
                     }
                 </Typography>
                 <GoogleMapReact
-                    bootstrapURLKeys={{ key: {api_key}}}
+                    bootstrapURLKeys={{ key: ""}}
                     center={centre}
                     zoom={zoom}
                     hoverDistance={hoverDistance}

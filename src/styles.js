@@ -1,8 +1,10 @@
 import { styled } from '@mui/material/styles';
 import RestaurantIcon from '@mui/icons-material/Restaurant';
-import { CardMedia, TextField, Typography } from '@mui/material';
+import { CardMedia, TextField, Typography, TableCell } from '@mui/material';
 import { IconButton } from '@mui/material';
 import { Link } from 'react-router-dom';
+
+/* Defines custom styled components */
 
 export const MyContainer = styled('div')(({ theme }) => ({
     backgroundColor: theme.palette.background.paper,
@@ -13,7 +15,6 @@ export const MyTitle = styled('h1')({
     fontSize: '4rem',
     fontWeight: 'bold',
     color: '#fdf7f4',
-
 });
 
 export const MySlogan = styled(Typography)({
@@ -46,7 +47,7 @@ export const MyIconButton = () => {
             }}}>
             <RestaurantIcon fontSize='large' sx={{  color: '#F45152', marginRight: '5px' }}/>
             <Typography variant="h2" color='secondary' >
-               MenuMap
+               TasteTracker
             </Typography>
         </IconButton>
     )
@@ -57,10 +58,6 @@ export const MySearch = styled(TextField)({
     width: '10vw',
     color: '#FFFFFF',
 });
-
-export const MyCardGrid = styled('div')(({ theme }) => ({
-    padding: '40px',
-  }));
 
 export const MyCard = styled('Card')(({ theme }) => ({
     boxShadow: '3px 3px 10px grey',
@@ -75,13 +72,14 @@ export const MyCardMedia = styled('CardMedia')(({ theme }) => ({
 
 export const MyCardContent = styled('CardContent')(({ theme }) => ({
     flexGrow: 1,
-  }));
-
-/*
-export const MyFooter = styled('footer')(({ theme }) => ({
-    backgroundColor: 'primary',
-    padding: '50px 0',
 }));
-*/
+
+export const MyBold = styled('Typography')(({ theme }) => ({
+    fontWeight: 'bold',
+}));
+
+export const MyTableCell = (props) => (
+    <TableCell sx={{paddingY: '4px'}} {...props} />
+);
 
 export default MyIconButton;
