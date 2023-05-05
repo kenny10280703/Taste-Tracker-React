@@ -13,7 +13,6 @@ export default function Map() {
     // if loaded is false, will display the loading animation
     const [loaded, setLoaded] = React.useState(false)
     const hoverDistance = 35
-    const api_key = process.env.REACT_APP_API_KEY
     
     // Use React Effect to get user's location, no dependencies means only get user's location once
     React.useEffect(() => {
@@ -85,7 +84,7 @@ export default function Map() {
         }
         )
         // the array of restaurants is stored in the React State allRestaurants
-        console.log(res.json())
+        setAllRestaurants(await res.json())
         //setAllRestaurants(await res.json())
         /*
         restaurants may has more than 1 image, backend will include all image links in a single string separated with ","

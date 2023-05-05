@@ -27,12 +27,12 @@ export default function RestaurantCard(props) {
             </IconButton>
          </Box>
          <CardActionArea component={Link} to={url}>
-                <CardMedia
+                {imageLink && <CardMedia
                     component="img"
                     image={imageLink[0]}
                     height="60"
                     alt="loading..."
-                />
+                />}
                 <CardContent>
                     <Typography variant="h6" component="div"> 
                         {name}
