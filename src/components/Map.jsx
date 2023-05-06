@@ -118,15 +118,14 @@ export default function Map() {
     return (
         <div>
             <div style={{ height: '75vh', width: '100%' }}>
-                <Typography align="center" sx={{ alignItems: "center", justifyContent: "center" }}>
-                    {!loaded && 
+                {!loaded &&
+                <Typography align="center" sx={{ alignItems: "center", justifyContent: "center", paddingBottom: 10}}>
                     <div>
                         <img src={loading} alt='Loading...' />
                         <br />
-                       <h2>Getting your location...</h2> 
+                        <h2>Getting your location...</h2> 
                     </div>
-                    }
-                </Typography>
+                </Typography>}
                 <GoogleMapReact
                     bootstrapURLKeys={{ key: ""}}
                     center={centre}

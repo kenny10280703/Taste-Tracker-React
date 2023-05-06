@@ -7,6 +7,7 @@ import Signup from './pages/Signup';
 import About from './pages/About';
 import ResetPassword from './pages/ResetPassword';
 import theme from './theme';
+import NoPage from './pages/NoPage';
 import {
   BrowserRouter,
   Route, 
@@ -34,6 +35,7 @@ root.render(
                     <Route path="/login" element={ <Login />}  />
                     <Route path="/signup" element={<Signup />} />
                     <Route path="/resetpassword" element={<ResetPassword />} />
+                    <Route path="*" element={<NoPage />} />
                 </Routes>
         </BrowserRouter>
         </AppContextProvider>

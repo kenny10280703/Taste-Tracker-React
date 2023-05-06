@@ -75,15 +75,14 @@ export default function List() {
         <div>
         <Box sx={{ mt: '40px' }}>
         {/* show the loading animation of loaded is false*/}
-        <Typography align="center" sx={{ alignItems: "center", justifyContent: "center" }}>
-            {!loaded && 
+        {!loaded &&
+        <Typography align="center" sx={{ alignItems: "center", justifyContent: "center", paddingBottom: 10}}>
                 <div>
                     <img src={loading} alt='Loading...' />
                     <br />
                     <h2>Getting your location...</h2> 
                 </div>
-            }
-            </Typography>
+        </Typography>}
             <Grid container spacing={4}>
                 {/* Map over the array of resturants and display each one */}
                 {allRestaurants.map((restaurant) => (

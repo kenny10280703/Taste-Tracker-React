@@ -1,35 +1,39 @@
 import React from 'react'
-import Header from '../components/Header'
-import Footer from '../components/Footer';
 import { AppContext } from '../AppContext'
-import { Button, TextField, FormControlLabel, Checkbox, Link, Grid, CssBaseline, Container, Typography, Card, Box, CardMedia } from '@mui/material';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { Box, Button, Card, CardMedia, Container, CssBaseline, Grid, Link as MUILink, TextField } from '@mui/material';
+import { ThemeProvider } from '@mui/material/styles';
 import { MyContainer, MySlogan } from '../styles.js'
+import { Link } from "react-router-dom";
+import Footer from '../components/Footer.jsx';
+import Header from '../components/Header';
+import theme from '../theme.jsx';
 import { Navigate } from 'react-router-dom';
 
 export default function Signup() {
     const [formData, setFormData] = React.useState({
         username: "",
         password: "",
-        email: ""
+        email: "",
+        firstName: "",
+        lastName: ""
     })
     const [status, setStatus] = React.useState({
         success: false,
         message: ""
     })
     const forbiddenChars = /&<>[]#`/
+    const { userObj } = React.useContext(AppContext)
     const mainRef = React.useRef(null);
     const headerRef = React.useRef(null);
-    const theme = createTheme();
-    const { userObj } = React.useContext(AppContext)
 
+  
     React.useEffect(() => {
-        const handleResize = () => {
+      const handleResize = () => {
         mainRef.current.style.minHeight = `calc(100vh - ${headerRef.current.clientHeight + document.querySelector('footer').clientHeight}px)`;
-        };
-        handleResize();
-        window.addEventListener('resize', handleResize);
-        return () => window.removeEventListener('resize', handleResize);
+      };
+      handleResize();
+      window.addEventListener('resize', handleResize);
+      return () => window.removeEventListener('resize', handleResize);
     }, []);
 
     const handleChange = (event) => {
@@ -92,102 +96,114 @@ export default function Signup() {
 
   return (
     <div>
-      {userObj && <Navigate replace to="/"/>}
-      {status.success && <Navigate replace to="/login"/>}
+      { userObj && <Navigate replace to="/"/> }
+      { status.success && <Navigate replace to="/login"/> }
     <CssBaseline />
-      <div ref={headerRef}>
-      <Header  />
-      </div>
-      <Box>
-      <main ref={mainRef}>
-        <MyContainer maxWidth='sm' >
-          <Card> 
-            <MySlogan align='center' sx={{ top: '15vh' }}>
-              Signup
-            </MySlogan>
-            <Box sx={{ position: 'relative' }}>
-              <CardMedia 
+    <div ref={headerRef}>
+     <Header />
+    </div>
+    <main ref={mainRef}>
+    {/* Displays header image with page title */}
+    <MyContainer maxWidth='sm' >
+    <Card> 
+        <MySlogan align='center' sx={{ top: '15vh', whiteSpace: 'nowrap' }}>
+            Sign up
+        </MySlogan>
+        <Box sx={{ position: 'relative' }}>
+            <CardMedia 
                 component="img"
                 sx={{ height: '30vh', filter: 'brightness(35%)' }}
-                image="https://images.pexels.com/photos/2347311/pexels-photo-2347311.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
+                image="https://images.pexels.com/photos/858508/pexels-photo-858508.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
                 alt="random"
-              /> 
-            </Box>
-          </Card>
-        </MyContainer>
-        <Container>
-          <ThemeProvider theme={theme}>
-            <Container component="main" maxWidth="xs">
-              <CssBaseline />
-              <Box
-                sx={{
-                  display: 'flex',
-                  flexDirection: 'column',
-                  alignItems: 'center',
-                }}
-              >
-                <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
-                  <TextField
-                    margin="normal"
-                    required
-                    fullWidth
-                    id="email"
-                    label="Email"
-                    name="email"
-                    value={formData.email}
-                    autoComplete="email"
-                    onChange={handleChange}
-                    autoFocus
-                  />
-                  <TextField
-                    margin="normal"
-                    required
-                    fullWidth
-                    id="username"
-                    label="Username"
-                    name="username"
-                    value={formData.username}
-                    autoComplete="username"
-                    onChange={handleChange}
-                    autoFocus
-                  />
-                  <TextField
-                    margin="normal"
-                    required
-                    fullWidth
-                    name="password"
-                    value={formData.password}
-                    label="Password"
-                    type="password"
-                    id="password"
-                    onChange={handleChange}
-                    autoComplete="current-password"
-                  />
-                  <Box sx={{color: 'red'}}>{status.message}</Box>
-                  <Button
-                    type="submit"
-                    fullWidth
-                    variant="contained"
-                    sx={{ mt: 3, mb: 2 }}
-                    onSubmit={handleSubmit}
-                  >
-                    Sign Up
-                  </Button>
-                  <Grid container>
-                    <Grid item>
-                      <Link href="/login" variant="body2">
-                        {"Already have an account? Login"}
-                      </Link>
-                    </Grid>
-                  </Grid>
-                </Box>
-              </Box>
-            </Container>
-          </ThemeProvider>
-        </Container>
-        </main>
-      </Box>
-        <Footer />
+            /> 
+        </Box>
+    </Card>
+    </MyContainer>
+    <Container>
+    <ThemeProvider theme={theme}>
+      <Container component="main" maxWidth="xs">
+        <CssBaseline />
+        <Box
+          sx={{
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+          }}
+        >
+          <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
+            <Grid container spacing={2}>
+              <Grid item xs={12} sm={6}>
+                <TextField
+                  autoComplete="given-name"
+                  name="firstName"
+                  value={formData.firstName}
+                  required
+                  fullWidth
+                  id="firstName"
+                  label="First Name"
+                  autoFocus
+                  onChange={handleChange}
+                />
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                <TextField
+                  required
+                  fullWidth
+                  id="lastName"
+                  label="Last Name"
+                  name="lastName"
+                  value={formData.lastName}
+                  autoComplete="family-name"
+                  onChange={handleChange}
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  required
+                  fullWidth
+                  id="email"
+                  label="Email Address"
+                  name="email"value={formData.email}
+                  autoComplete="email"
+                  onChange={handleChange}
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  required
+                  fullWidth
+                  name="password"
+                  value={formData.password}
+                  label="Password"
+                  type="password"
+                  id="password"
+                  autoComplete="new-password"
+                  onChange={handleChange}
+                />
+              </Grid>
+            </Grid>
+            <Button
+              type="submit"
+              fullWidth
+              variant="contained"
+              sx={{ mt: 3, mb: 2 }}
+            >
+              Sign Up
+            </Button>
+            <Grid container justifyContent="flex-end">
+              <Grid item>
+                <MUILink component={Link} to='/login' variant="body2">
+                  Already have an account? Login
+                </MUILink>
+              </Grid>
+            </Grid>
+          </Box>
+        </Box>
+      </Container>
+    </ThemeProvider>
+    </Container>
+    </main>
+    <Footer />
     </div>
   )
 }
