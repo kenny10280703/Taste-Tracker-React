@@ -4,6 +4,11 @@ import { MyContainer, MySlogan } from '../styles.js'
 import Footer from '../components/Footer.jsx';
 import Header from '../components/Header';
 
+/**
+ * Renders the about page which provides information about the website and its purpose.
+ * Includes a header, a slogan, and a description of the website.
+ * @returns {JSX.Element} The JSX code for the About page.
+ */
 function About() {
   return (
     <>

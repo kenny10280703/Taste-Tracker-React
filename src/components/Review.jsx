@@ -1,7 +1,16 @@
 import { Avatar, Box, Card, CardContent, CssBaseline, Grid, Rating, Typography } from '@mui/material';
 import React from 'react'
 
-/* Renders a users review of a restaurant */
+/**
+ * A React component that displays a review card with a user's username, rating, and comment.
+ *
+ * @param {object} props - The props object containing the following properties:
+ * @param {string} props.username - The username of the user who left the review.
+ * @param {number} props.rating - The rating given by the user.
+ * @param {string} props.comment - The comment left by the user.
+ *
+ * @returns {JSX.Element} - A JSX element that displays a review card.
+ */
 
 function Review(props) {
     const { username, rating, comment } = props

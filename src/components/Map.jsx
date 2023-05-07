@@ -4,43 +4,76 @@ import GoogleMapReact from 'google-map-react';
 import { AppContext } from '../AppContext';
 import loading from '../image/loading.gif'
 import { Typography } from '@mui/material'
+import UserLocation from './UserLocation';
 
 export default function Map() {
+    /*
+    * Store user's latitude and longitude in an array as Google Map React component take them as parameter in array format 
+    * centre[0] is latitude, centre[1] is longitude
+    */
     const [centre, setCentre] = React.useState()
+    // Default the zoom level of the Google Map React component
     const zoom = 17
+    // store any array of restaurants
     const [allRestaurants, setAllRestaurants] = React.useState([])
+    // store an object of filter data
     const { filterData } = React.useContext(AppContext)
-    // if loaded is false, will display the loading animation
+    // a Boolean value to determine whether display the loading animation
     const [loaded, setLoaded] = React.useState(false)
+    // Determine a distance between the marker and cursor to trigger the hover effect
     const hoverDistance = 35
     
-    // Use React Effect to get user's location, no dependencies means only get user's location once
+    /**
+     * Fetch user's current location and update the centre state
+     * Runs only once, when the component mounts.
+     * @function
+     * @name useEffect
+     * @param {function} getLocation - A function that fetch user's current location and sets it as the component state.
+     * @param {Array} dependencies - No dependencies means this usEffect hook will only run once
+     * @returns {void}
+    */
     React.useEffect(() => {
         getLocation()
       }, [])
     
-    // Use React useEffect to make sure only fetch backend API to get restaurants after getting user's location
+    /**
+     * Fetch restaurants and update the allRestaurants state when the location state changes.
+     * @function
+     * @name useEffect
+     * @param {function} getRestaurants - A function that fetches restaurants and updates the allRestaurants state.
+     * @param {boolean} setLoaded - A function that updates the loaded state to true after restaurants have been fetched.
+     * @param {Object} location - An object that contains latitude and longitude coordinates of the user's location.
+     * @returns {void}
+     */
     React.useEffect(() => {
     if(centre){
-        // change loaded to true after getting user's location
         setLoaded(true)
         getRestaurants()
     }
     }, [centre])
 
-    /* Use React useEffect to make filterData as dependencies, which means if filter is changed, will run the function to change
-    restaurants displayed */
+    /**
+     * Run the updateRestaurantsShown function whenever the filterData state changes.
+     * @function
+     * @name useEffect
+     * @param {function} updateRestaurantsShown - A function that updates the state of allRestaurants based on the cuisine filter.
+     * @param {Array} dependencies - An array of state variables that this useEffect hook depends on. In this case, filterData.
+     * @returns {void}
+    */
     React.useEffect(() => {
         updateRestaurantsShown()
       }, [filterData])
 
-    /* 
-    Update the restaurants to be displayed. Add a Boolean property filtered to all restaurants, and match the restaurant's info against the filter.
-    If it does not match, filtered will be true, vice versa.
-    */ 
+    /**
+    * Update the state of allRestaurants to show only the restaurants that match the cuisine filter.
+    *
+    * @function
+    * @returns {void}
+    */
     const updateRestaurantsShown = () => {
             setAllRestaurants(prevState => {
             return prevState.map(state => {
+                // Add a new property "filtered" to each restaurant objects
                 if (filterData.cuisine != "Any cuisine" && !(state.cuisine === filterData.cuisine)) {
                 return {
                     ...state,
@@ -57,21 +90,31 @@ export default function Map() {
             })
         }
 
-    /* 
-    Get user's location with Javascript's Geolocation API. Using precision location to make sure restaurants are actually within
-    1 mile of user's locationm, which affects performance
-    */
+    /**
+     * Gets the user's current location using the Geolocation API and sets it as the component state.
+     * 
+     * @function
+     * @async
+     * @returns {void}
+     */
     const getLocation = () => {
         navigator.geolocation.getCurrentPosition( position => {
             setCentre([position.coords.latitude, position.coords.longitude])
         }, error => {
             // show dialog box to user and then refresh the page when user closed the box
-            if(!alert('Please allow the web browser to access your location!')){window.location.reload()}
+            if(!alert("Please allow the web browser to access your location!")){window.location.reload()}
         }
         )
     }
 
-    // Get an array of restaurants by fetching backend API
+    /**
+     * Retrieves a list of restaurants from the server based on the current location, and updates the React state with the results.
+     *
+     * @async
+     * @function
+     * @returns {Promise<void>}
+     *
+     */
     const getRestaurants = async() => {
     try{
         const res = await fetch("http://localhost:9090/food_finder/restaurants", 
@@ -84,27 +127,39 @@ export default function Map() {
         }
         )
         // the array of restaurants is stored in the React State allRestaurants
-        setAllRestaurants(await res.json())
+        if (res.status === 200) {
+            setAllRestaurants(await res.json())
+        } else {
+            if(!alert("Error communicating with server, website will refresh after closing this dialog box.")){window.location.reload()}
+        }
     } catch(error) {
-        console.log(error.message)
+        if(!alert("Error communicating with server, website will refresh after closing this dialog box.")){window.location.reload()}
     }
     }
-
-    /* Function to toggle the restaurant card when user click the marker. 
-    This function will show the selected restaurant's card and close all the shown Markers
-    This function pass down to the Marker components and takes the Marker's id as parameter
-    */ 
+    /**
+     * Toggles the show property of the restaurant with the given id to true, and sets all other restaurants' show property to false.
+     * If show property is true, will show the restaurant info card on the map
+     * This function is passed down to the Marker Componenet
+     *
+     * @function
+     * @param {number} id - The id of the restaurant to toggle.
+     * @returns {void}
+     */
     function toggle(id) {
-    setAllRestaurants(prevState => {
-        return prevState.map(state => {
-        // make sure that the correct marker is toggled.
-        return state.id === id ? {...state, show: true} : {...state, show: false}
+        setAllRestaurants(prevState => {
+            return prevState.map(state => {
+            return state.id === id ? {...state, show: true} : {...state, show: false}
+            })
         })
-    })
     }
 
-    // function to close the restaurant card when user click the Close Icon
-    //  This function pass down to the Restaurant Card component
+    /**
+     * Closes the currently opened restaurant card and updates the React state accordingly.
+     * This function is passed down to the ReestaurantCard component
+     *
+     * @param {Event} event - The click event that triggered the function.
+     * @returns {void}
+     */
     const close = (event) => {
         event.stopPropagation()
         setAllRestaurants(prevState => {
@@ -118,36 +173,49 @@ export default function Map() {
     return (
         <div>
             <div style={{ height: '75vh', width: '100%' }}>
+                { /* Show loading animation if loaded is false, otherwise show the map*/ }
                 {!loaded &&
-                <Typography align="center" sx={{ alignItems: "center", justifyContent: "center", paddingBottom: 10}}>
+                <Typography align="center" sx={{ alignItems: "center", justifyContent: "center", marginBottom: 10}}>
                     <div>
                         <img src={loading} alt='Loading...' />
                         <br />
                         <h2>Getting your location...</h2> 
                     </div>
                 </Typography>}
+                {/* 
+                * bootstrapURLKeys is the Google Map Api key
+                * centre: centre the map according to the latitude and longtitude provided
+                * zoom: zoom level of the map
+                * hoverDistance: Determine the distance between the marker and cursor to trigger the hover effect
+                */}
                 <GoogleMapReact
                     bootstrapURLKeys={{ key: ""}}
                     center={centre}
                     zoom={zoom}
                     hoverDistance={hoverDistance}
                 >
-                {allRestaurants.map( restaurant => {
-                    if (!restaurant.filtered) {
-                        return (
-                            <Marker
-                            key={restaurant.id}   
-                            lat={restaurant.latitude}
-                            lng={restaurant.longitude}
-                            restaurantInfo={restaurant}
-                            show={restaurant.show}
-                            toggle={()=> toggle(restaurant.id)}
-                            close={close}
-                            />
-                        )
+                    {/* Show a marker on user's current location */}
+                    {loaded && <UserLocation
+                        lat={centre[0]}
+                        lng={centre[1]}
+                    />}
+                    {/* Render markers on the map if the restaurant is not filtered */}
+                    {allRestaurants.map( restaurant => {
+                        if (!restaurant.filtered) {
+                            return (
+                                <Marker
+                                key={restaurant.id}   
+                                lat={restaurant.latitude}
+                                lng={restaurant.longitude}
+                                restaurantInfo={restaurant}
+                                show={restaurant.show}
+                                toggle={()=> toggle(restaurant.id)}
+                                close={close}
+                                />
+                            )
+                        }
                     }
-                }
-                )}
+                    )}
                 </GoogleMapReact>
             </div>
         </div>

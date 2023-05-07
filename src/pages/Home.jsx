@@ -8,9 +8,14 @@ import List from '../components/List'
 import { Box, Button, Card, CardMedia, CssBaseline, Grid, Typography, Container } from '@mui/material';
 import { MyContainer, MySlogan } from '../styles';
 
-
+/**
+ * The Home component displays the landing page of the application, which includes a header, a main content area, and a footer. 
+ * It uses the React.useState hook to manage the state of the view mode (map or list), 
+ * and toggles between the two views when the toggle button is clicked.
+ *
+ * @return {JSX.Element} The JSX code for the Home component
+ */
 export default function Home() {  
-    
   const [isMapView, setIsMapView] = React.useState(true);
 
     const toggleView = () => {

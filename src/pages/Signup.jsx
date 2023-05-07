@@ -61,7 +61,7 @@ export default function Signup() {
     const handleSubmit = async(event) => {
         event.preventDefault()
         try {
-            const res = await fetch("http://localhost:9090/food_finder/users/signup", 
+            const res = await fetch("http://localhost:9090/food_finder/users/register", 
             {
                 headers: {
                     "Content-Type": "application/json"
@@ -73,18 +73,14 @@ export default function Signup() {
                     password: formData.password
                 })
             })
-            if (res.response === 200) {
+            if (res.status === 201) {
                 alert("Register successful! Thank you for joining us!")
                 setStatus({
                     success: true,
                     message: ""
                 })
             } else {
-                const { message } = res.json()
-                setStatus({
-                    success: false,
-                    message: message
-                })
+                console.log(res.status)
             }
         } catch (error) {
             setStatus({
@@ -161,9 +157,22 @@ export default function Signup() {
                 <TextField
                   required
                   fullWidth
+                  id="username"
+                  label="Username"
+                  name="username"
+                  value={formData.username}
+                  autoComplete="username"
+                  onChange={handleChange}
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  required
+                  fullWidth
                   id="email"
                   label="Email Address"
-                  name="email"value={formData.email}
+                  name="email"
+                  value={formData.email}
                   autoComplete="email"
                   onChange={handleChange}
                 />

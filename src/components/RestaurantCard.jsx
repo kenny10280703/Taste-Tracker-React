@@ -3,8 +3,19 @@ import { Link } from 'react-router-dom'
 import { Card, CardMedia, Typography, CardActionArea, CardContent, Rating, Box, IconButton } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 
+/**
+ * Renders a card that displays information about a restaurant, displayed in the restaurant map view when user click a marker.
+ * @param {object} props - The restaurant information passed as a prop
+ * @param {string} props.id - The ID of the restaurant
+ * @param {string} props.name - The name of the restaurant
+ * @param {number} props.overallRating - The overall rating of the restaurant
+ * @param {Array<string>} props.imagesLink - An array of image links for the restaurant
+ * @param {number} props.distanceFromUser - The distance from the user to the restaurant
+ * @param {function} props.close - A callback function for hiding this restaurant card on the map
+ * @returns {JSX.Element} - A component that displays the restaurant information
+ */
 export default function RestaurantCard(props) {
-    const { id, name, overallRating, imageLink, distanceFromUser } = props.restaurantInfo
+    const { id, name, overallRating, imagesLink, distanceFromUser } = props.restaurantInfo
     const infoWindowStyle = {
     position: 'relative',
     left: '-45px',
@@ -27,12 +38,12 @@ export default function RestaurantCard(props) {
             </IconButton>
          </Box>
          <CardActionArea component={Link} to={url}>
-                <CardMedia
+                {imagesLink && <CardMedia
                     component="img"
-                    image={imageLink[0]}
+                    image={imagesLink[0]}
                     height="60"
                     alt="loading..."
-                />
+                />}
                 <CardContent>
                     <Typography variant="h6" component="div"> 
                         {name}
@@ -40,7 +51,6 @@ export default function RestaurantCard(props) {
                    <Box display="flex" flexWrap="wrap">
                         <Rating name="rating" value={overallRating} precision={0.5} readOnly />
                         {distanceFromUser}m away
-
                    </Box>
                 </CardContent>
              </CardActionArea>

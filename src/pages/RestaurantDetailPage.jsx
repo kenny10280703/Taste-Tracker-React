@@ -10,12 +10,19 @@ import { AppContext } from '../AppContext.jsx';
 import loading from '../image/loading.gif'
 import { Navigate } from 'react-router-dom';
 
+/**
+ * A page to display the following information of a restaurant:
+ * Images, name, phone, rating, cuisine, distance from user, walking time, operating hours of the week, link to menu (if any),
+ * address, average main dish cost
+ * 
+ * @returns {JSX.Element} Returns the login page JSX element.
+ */
 export default function RestaurantDetailPage() {
     const { id } = useParams()
     const [restaurantInfo, setRestaurantInfo] = React.useState({})
     const [formData, setFormData] = React.useState({newRating: 0, newComment: ""})
     const [allReviews, setAllReviews] = React.useState([])
-    const { token, logout } = React.useContext(AppContext)
+    const { userObj, token, logout } = React.useContext(AppContext)
     const [location, setLocation] = React.useState()
     const [loaded, setLoaded] = React.useState(false)
     const [noPage, setNoPage] = React.useState(false)
@@ -94,7 +101,7 @@ export default function RestaurantDetailPage() {
 
     const getReviews = async() => {
         try{
-            const res = await fetch(`https//localhost:9090/food_finder/restaurants/reviews/${id}`)
+            const res = await fetch(`http://localhost:9090/food_finder/restaurants/reviews/${id}`)
             if (res.status === 200) {
                 setAllReviews(await res.json())
             } else {
@@ -106,31 +113,31 @@ export default function RestaurantDetailPage() {
 
     const handleSubmit = async() => {
         try{
-            const res = await fetch("", 
+            const res = await fetch(`http://localhost:9090/food_finder/restaurants/reviews/${id}`, 
             {
                 headers: {
-                    "Content-Type": "application/json"
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${token}`
                 },
                 method: "POST",
                 body: JSON.stringify({
-                    token: token, 
+                    token: token,
                     rating: formData.newRating, 
-                    text: formData.newReviewText})
+                    comment: formData.newComment})
             }
             )
-            if (res.status === 200) {
+            if (res.status === 201) {
                 setFormData({newRating: 0, newComment: ""})
-                // TODO: getreviews
-            } else if (res.status === 400) {
-                alert("Your session has expired, please login again")
-            } else {
-                const message = res.json()
-                alert(`Failed to post review due to ${message}`)
+                getReviews()
+            } else if (res.status === 500) {
+                alert("Please login to post a review")
+                logout()
+            } else if (res.status === 409){
+                alert("You have already posted review for this restaurant!")
             }
         } catch(error) {
             alert(`Failed to post review due to ${error.message}`)
         }
-        
     }
 
     const handleChange = (event) => {
@@ -141,7 +148,6 @@ export default function RestaurantDetailPage() {
                 [name]: value
             }
         })
-        console.log(formData)
     }
 
     let{ name, overallRating, cuisine, address, averageCostOfADish, menuLink, distanceFromUser, 
@@ -295,6 +301,7 @@ export default function RestaurantDetailPage() {
                            </div>
                         </CardContent>
                     </Card>
+                    {console.log(allReviews)}
                     {allReviews.map(review => {
                         return (<Review 
                             key={review.id}
