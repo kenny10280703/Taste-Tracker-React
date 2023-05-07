@@ -9,6 +9,11 @@ import Header from '../components/Header';
 import theme from '../theme.jsx';
 import { Navigate } from 'react-router-dom';
 
+/**
+ * Signup Component is a page containing a form used to register users into the system.
+ *
+ * @return {JSX.Element} Returns a JSX Element that renders a form.
+ */
 export default function Signup() {
     const [formData, setFormData] = React.useState({
         username: "",
@@ -21,7 +26,6 @@ export default function Signup() {
         success: false,
         message: ""
     })
-    const forbiddenChars = /&<>[]#`/
     const { userObj } = React.useContext(AppContext)
     const mainRef = React.useRef(null);
     const headerRef = React.useRef(null);
@@ -38,26 +42,18 @@ export default function Signup() {
 
     const handleChange = (event) => {
         const { name, value } = event.target
-        console.log(value)
-        if (forbiddenChars.test(value)) {
-            setStatus({
-                success: false,
-                message: `${name} cannot contains the following characters: &<>[]#`
-            })
-            console.log("@@")
-        } else {
-            setFormData(prevFormData => {
-                return {
-                    ...prevFormData,
-                    [name] : value
-                }
-            })
-            setStatus({
-                success: false,
-                message: ""
-            })
-        }
+        setFormData(prevFormData => {
+            return {
+                ...prevFormData,
+                [name] : value
+            }
+        })
+        setStatus({
+            success: false,
+            message: ""
+        })
     }
+
     const handleSubmit = async(event) => {
         event.preventDefault()
         try {
@@ -79,13 +75,26 @@ export default function Signup() {
                     success: true,
                     message: ""
                 })
+            } else if (res.status === 409) {
+                setStatus({
+                    success: false,
+                    message: "The username/email is used for registration."
+                })
+            } else if (res.status === 400) {
+                setStatus({
+                    success: false,
+                    message: "Password should contain at least 5 characters and only contain letters, digits and underscores"
+                })
             } else {
-                console.log(res.status)
+                setStatus({
+                    success: false,
+                    message: "Error Communicating with server. Please try again."
+                })
             }
         } catch (error) {
             setStatus({
                 success: false,
-                message: error.message
+                message: "Error Communicating with server. Please try again."
             })
         }
     }
@@ -191,6 +200,7 @@ export default function Signup() {
                 />
               </Grid>
             </Grid>
+            <Box sx={{color: 'red'}}>{status.message}</Box>
             <Button
               type="submit"
               fullWidth
