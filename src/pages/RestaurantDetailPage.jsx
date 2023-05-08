@@ -359,7 +359,6 @@ export default function RestaurantDetailPage() {
         </MyContainer>
         <ToastContainer 
             autoClose={3000}
-            position="bottom-right"
         />
         </div>}
         </main>

@@ -96,6 +96,7 @@ export default function Login() {
             })
             if (res.status === 200) {
                 const { userObj, token } = await res.json()
+                toast.success("Login successfully!")
                 login(userObj, token)
             } else {
                 const data = await res.json()

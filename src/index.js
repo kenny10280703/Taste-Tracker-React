@@ -15,6 +15,7 @@ import {
 import { AppContextProvider } from './AppContext';
 import { ThemeProvider } from '@emotion/react';
 import { CssBaseline } from '@mui/material';
+import { ToastContainer } from 'react-toastify';
 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
@@ -26,6 +27,9 @@ root.render(
     <ThemeProvider theme={theme}>
         <CssBaseline />
         <AppContextProvider>
+        <ToastContainer 
+          autoClose={3000}
+        />
         <BrowserRouter>
                 <Routes>
                     <Route path="/" element={<Home />} />

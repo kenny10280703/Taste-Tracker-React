@@ -8,6 +8,7 @@ import Footer from '../components/Footer.jsx';
 import Header from '../components/Header';
 import theme from '../theme.jsx';
 import { Navigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
 /**
  * Signup Component is a page containing a form used to register users into the system.
@@ -76,7 +77,7 @@ export default function Signup() {
                 })
             })
             if (res.status === 201) {
-                alert("Register successful! Thank you for joining us!")
+                toast.success("Thank you for registering with us! Please login now.")
                 setStatus({
                     success: true,
                     message: ""
