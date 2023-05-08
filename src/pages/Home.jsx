@@ -1,5 +1,4 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
 import Header from '../components/Header'
 import Footer from '../components/Footer'
 import Dropdown from '../components/Dropdown'
@@ -15,7 +14,7 @@ import { MyContainer, MySlogan } from '../styles';
  *
  * @return {JSX.Element} The JSX code for the Home component
  */
-export default function Home() {  
+export default function Home() { 
   const [isMapView, setIsMapView] = React.useState(true);
 
     const toggleView = () => {
@@ -47,7 +46,6 @@ export default function Home() {
                                 /> 
                             </Box>
                         </Card>
-
                         <Container sx={{ mt: '20px' }}>
                             <Typography variant='h1' align='left' color='textPrimary' >
                                 Restaurants within a mile of you
