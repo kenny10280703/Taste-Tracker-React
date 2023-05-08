@@ -9,7 +9,7 @@ import { Link } from "react-router-dom";
 import { AppContext } from '../AppContext.jsx';
 import loading from '../image/loading.gif'
 import { Navigate } from 'react-router-dom';
-
+import { ToastContainer, toast } from 'react-toastify';
 
 /**
  * A page to display the following information of a restaurant:
@@ -31,8 +31,15 @@ export default function RestaurantDetailPage() {
     const [allReviews, setAllReviews] = React.useState([])
     const { token, logout } = React.useContext(AppContext)
     const [location, setLocation] = React.useState()
-    const [loaded, setLoaded] = React.useState(false)
     const [noPage, setNoPage] = React.useState(false)
+    const [open, setOpen] = React.useState(false);
+    const handleClickOpen = () => {
+        setOpen(true);
+    };
+    const handleClose = () => {
+        setOpen(false);
+    };
+
 
     
     /* Gets the height of the header and footer an subtracts it from the total height of the 
@@ -53,7 +60,6 @@ export default function RestaurantDetailPage() {
         // change loaded to true after getting user's location
         if (location) {
             getRestaurantInfo()
-            setLoaded(true)
         }
       }, [location])
 
@@ -114,11 +120,11 @@ export default function RestaurantDetailPage() {
             )
             if (res.status === 200) {
                 setRestaurantInfo(await res.json())
-            } else if(res.status == 400) {
+            } else {
                 setNoPage(true)
             }
         } catch(error) {
-            console.log("error")
+            setNoPage(true)
         }
     }
 
@@ -164,15 +170,16 @@ export default function RestaurantDetailPage() {
             )
             if (res.status === 201) {
                 setFormData({newRating: 0, newComment: ""})
+                toast.success("Review submited!")
                 getReviews()
             } else if (res.status === 500) {
-                alert("Please login to post a review")
+                toast.error("Please login to submit a new review!")
                 logout()
             } else if (res.status === 409){
-                alert("You have already posted review for this restaurant!")
+                toast.error("You have already posted review for this restaurant!")
             }
         } catch(error) {
-            alert(`Failed to post review due to ${error.message}`)
+            toast.error(`Failed to post review due to ${error.message}`)
         }
     }
 
@@ -199,7 +206,7 @@ export default function RestaurantDetailPage() {
         </div>
         <main ref={mainRef}>
         {/* Displays header image with page title */}
-        {!loaded &&
+        {!location &&
         <Typography align="center" sx={{ alignItems: "center", justifyContent: "center", paddingBottom: 10}}>
                 <div>
                     <img src={loading} alt='Loading...' />
@@ -207,7 +214,7 @@ export default function RestaurantDetailPage() {
                     <h2>Getting your location...</h2> 
                 </div>
         </Typography>}
-        {loaded && <div>
+        {location && <div>
         <MyContainer maxWidth='sm' >
         <Card>
             <Box sx={{ position: 'relative' }}>
@@ -350,6 +357,10 @@ export default function RestaurantDetailPage() {
                 </Container>
             </Box>
         </MyContainer>
+        <ToastContainer 
+            autoClose={3000}
+            position="bottom-right"
+        />
         </div>}
         </main>
         <Footer />

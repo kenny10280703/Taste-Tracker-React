@@ -82,7 +82,7 @@ export default function Signup() {
                     message: ""
                 })
             } else {
-                const data = res.json()
+                const data = await res.json()
                 const message = data.message
                 setStatus({
                     success: false,

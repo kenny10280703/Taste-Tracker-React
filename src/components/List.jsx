@@ -10,8 +10,6 @@ export default function List() {
     const [location, setLocation] = React.useState()
     // store any array of restaurants
     const [allRestaurants, setAllRestaurants] = React.useState([])
-    // a Boolean value to determine whether display the loading animation
-    const [loaded, setLoaded] = React.useState(false)
     // store an object of filter data
     const { filterData } = React.useContext(AppContext) 
 
@@ -33,14 +31,12 @@ export default function List() {
      * @function
      * @name useEffect
      * @param {function} getRestaurants - A function that fetches restaurants and updates the allRestaurants state.
-     * @param {boolean} setLoaded - A function that updates the loaded state to true after restaurants have been fetched.
      * @param {Object} location - An object that contains latitude and longitude coordinates of the user's location.
      * @returns {void}
      */
     React.useEffect(() => {
         if (location) {
             getRestaurants()
-            setLoaded(true)
         }
       }, [location])
 
@@ -147,7 +143,7 @@ export default function List() {
         <div>
         <Box sx={{ mt: '40px' }}>
         {/* show the loading animation if React state loaded is false*/}
-        {!loaded &&
+        {!location &&
         <Typography align="center" sx={{ alignItems: "center", justifyContent: "center", paddingBottom: 10}}>
                 <div>
                     <img src={loading} alt='Loading...' />

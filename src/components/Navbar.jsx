@@ -1,7 +1,8 @@
 import React from "react";
-import { Button, Typography } from '@mui/material';
+import { Button, Typography, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from '@mui/material';
 import { Link } from "react-router-dom";
 import { AppContext } from "../AppContext";
+import { ToastContainer, toast } from 'react-toastify';
 
 function Navbar() {
     /* 
@@ -10,7 +11,22 @@ function Navbar() {
     If user is logged in, hides the Login and Signup button; display username and Logout button instead
     */
     const { userObj, logout } = React.useContext(AppContext)
+    const [open, setOpen] = React.useState(false);
+    const handleClickOpen = () => {
+        setOpen(true);
+    }
 
+    const handleClose = () => {
+        setOpen(false);
+    }
+
+    const handleConfirm = () => {
+        logout()
+        toast.success("Logged out successfully")
+        setOpen(false)
+    }
+
+    
 return (
     <nav>
         <ul sx={{ ml: '20px'}}>
@@ -27,10 +43,29 @@ return (
         </Button>}
         {/* If user is logged in, the user object is not null, so the the following pages are shown */}
         { userObj && <Typography display="inline">{userObj.username}</Typography>}
-        { userObj && <Button onClick={logout} variant='text' color='secondary' sx={{ whiteSpace: 'nowrap' }}>
+        { userObj && 
+        <Button onClick={handleClickOpen} variant='text' color='secondary' sx={{ whiteSpace: 'nowrap' }}>
             Logout
-        </Button>}
+        </Button> }
+        <Dialog
+            open={open}
+            onClose={handleClose}
+            aria-labelledby="confirm-logout"
+            aria-describedby="confirm-logout">
+                <DialogTitle id="confirm-logout-title">
+                    {"Confirm logout?"}
+                </DialogTitle>
+                <DialogActions>
+                <Button onClick={handleClose}>Cancel</Button>
+                <Button onClick={handleConfirm} autoFocus>
+                    Confirm
+                </Button>
+                </DialogActions>
+        </Dialog>
         </ul>
+        <ToastContainer 
+            autoClose={3000}
+        />
     </nav>
     );
 }

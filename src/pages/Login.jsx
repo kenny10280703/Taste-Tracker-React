@@ -6,6 +6,8 @@ import { Button, TextField, FormControlLabel, Checkbox, Link, Grid, CssBaseline,
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { MyContainer, MyTitle } from '../styles.js'
 import { Navigate } from 'react-router-dom';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 /**
  * Login component to allow users to login to the application.
@@ -93,24 +95,20 @@ export default function Login() {
                 })
             })
             if (res.status === 200) {
-                const { userObj, token} = await res.json()
+                const { userObj, token } = await res.json()
                 login(userObj, token)
-                
-            } else if(res.status === 404) {
-                setStatus({
-                  success: false,
-                  message: "Invalid username/password"
-                })
             } else {
+                const data = await res.json()
+                const message = data.message
                 setStatus({
                   success: false,
-                  message: "Error communicating with server"
+                  message: message
                 })
             }
         } catch(error) {
             setStatus({
               success: false,
-              message: error.message
+              message: "Error communicating with server"
             })
         }
     }
@@ -202,6 +200,9 @@ export default function Login() {
             </Container>
           </ThemeProvider>
         </Container>
+        <ToastContainer
+          autoClose={false}
+        />
         </main>
       </Box>
         <Footer />

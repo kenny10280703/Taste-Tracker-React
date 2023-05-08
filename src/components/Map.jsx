@@ -18,8 +18,6 @@ export default function Map() {
     const [allRestaurants, setAllRestaurants] = React.useState([])
     // store an object of filter data
     const { filterData } = React.useContext(AppContext)
-    // a Boolean value to determine whether display the loading animation
-    const [loaded, setLoaded] = React.useState(false)
     // Determine a distance between the marker and cursor to trigger the hover effect
     const hoverDistance = 35
     
@@ -41,13 +39,11 @@ export default function Map() {
      * @function
      * @name useEffect
      * @param {function} getRestaurants - A function that fetches restaurants and updates the allRestaurants state.
-     * @param {boolean} setLoaded - A function that updates the loaded state to true after restaurants have been fetched.
      * @param {Object} location - An object that contains latitude and longitude coordinates of the user's location.
      * @returns {void}
      */
     React.useEffect(() => {
     if(centre){
-        setLoaded(true)
         getRestaurants()
     }
     }, [centre])
@@ -174,7 +170,7 @@ export default function Map() {
         <div>
             <div style={{ height: '75vh', width: '100%' }}>
                 { /* Show loading animation if loaded is false, otherwise show the map*/ }
-                {!loaded &&
+                {!centre &&
                 <Typography align="center" sx={{ alignItems: "center", justifyContent: "center", marginBottom: 10}}>
                     <div>
                         <img src={loading} alt='Loading...' />
@@ -195,7 +191,7 @@ export default function Map() {
                     hoverDistance={hoverDistance}
                 >
                     {/* Show a marker on user's current location */}
-                    {loaded && <UserLocation
+                    {centre && <UserLocation
                         lat={centre[0]}
                         lng={centre[1]}
                     />}
