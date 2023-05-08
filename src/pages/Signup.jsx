@@ -2,7 +2,7 @@ import React from 'react'
 import { AppContext } from '../AppContext'
 import { Box, Button, Card, CardMedia, Container, CssBaseline, Grid, Link as MUILink, TextField } from '@mui/material';
 import { ThemeProvider } from '@mui/material/styles';
-import { MyContainer, MySlogan } from '../styles.js'
+import { MyContainer, MyTitle } from '../styles.js'
 import { Link } from "react-router-dom";
 import Footer from '../components/Footer.jsx';
 import Header from '../components/Header';
@@ -81,20 +81,12 @@ export default function Signup() {
                     success: true,
                     message: ""
                 })
-            } else if (res.status === 409) {
-                setStatus({
-                    success: false,
-                    message: "The username/email is used for registration."
-                })
-            } else if (res.status === 400) {
-                setStatus({
-                    success: false,
-                    message: "Password should contain at least 5 characters and only contain letters, digits and underscores"
-                })
             } else {
+                const data = res.json()
+                const message = data.message
                 setStatus({
                     success: false,
-                    message: "Error Communicating with server. Please try again."
+                    message: message
                 })
             }
         } catch (error) {
@@ -117,9 +109,9 @@ export default function Signup() {
     {/* Displays header image with page title */}
     <MyContainer maxWidth='sm' >
     <Card> 
-        <MySlogan align='center' sx={{ top: '15vh', whiteSpace: 'nowrap' }}>
+        <MyTitle align='center' sx={{ top: '15vh', whiteSpace: 'nowrap' }}>
             Sign up
-        </MySlogan>
+        </MyTitle>
         <Box sx={{ position: 'relative' }}>
             <CardMedia 
                 component="img"

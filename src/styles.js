@@ -11,24 +11,50 @@ export const MyContainer = styled('div')(({ theme }) => ({
     padding: theme.spacing(0, 0, 6),
   }));
   
-export const MyTitle = styled('h1')({
-    fontSize: '4rem',
-    fontWeight: 'bold',
-    color: '#fdf7f4',
-});
-
-export const MySlogan = styled(Typography)({
+  export const MyTitle = styled(Typography)(({ theme }) => ({
     position: 'absolute',
     left: 0,
     width: '100%',
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
-    fontSize: '5rem',
     fontWeight: 'bold',
     color: '#FFFFFF',
     zIndex: 1,
-});
+    fontSize: '3rem', // default font size
+    [theme.breakpoints.up('sm')]: {
+        fontSize: '4rem', // font size for small screens and up
+    },
+    [theme.breakpoints.up('md')]: {
+        fontSize: '5rem', // font size for medium screens and up
+    },
+    top: '25vh', // default position
+    [theme.breakpoints.up('sm')]: {
+        top: '19vh', // position for small screens and up
+    },
+    [theme.breakpoints.up('md')]: {
+        top: '15vh', // position for medium screens and up
+    },
+}));
+
+export const MySlogan = styled(Typography)(({ theme }) => ({
+    position: 'absolute',
+    left: 0,
+    width: '100%',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    fontWeight: 'bold',
+    color: '#FFFFFF',
+    zIndex: 1,
+    fontSize: '3rem', // default font size
+    [theme.breakpoints.up('sm')]: {
+      fontSize: '4rem', // font size for small screens and up
+    },
+    [theme.breakpoints.up('md')]: {
+      fontSize: '5rem', // font size for medium screens and up
+    },
+}));
 
 export const MyFrontImage = styled(CardMedia)({
     height: '100%',

@@ -4,7 +4,7 @@ import Footer from '../components/Footer';
 import { AppContext } from '../AppContext'
 import { Button, TextField, FormControlLabel, Checkbox, Link, Grid, CssBaseline, Container, Typography, Card, Box, CardMedia } from '@mui/material';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { MyContainer, MySlogan } from '../styles.js'
+import { MyContainer, MyTitle } from '../styles.js'
 import { Navigate } from 'react-router-dom';
 
 /**
@@ -126,9 +126,9 @@ export default function Login() {
       <main ref={mainRef}>
         <MyContainer maxWidth='sm' >
           <Card> 
-            <MySlogan align='center' sx={{ top: '15vh' }}>
+            <MyTitle align='center' sx={{ top: '15vh' }}>
               Login
-            </MySlogan>
+            </MyTitle>
             <Box sx={{ position: 'relative' }}>
               <CardMedia 
                 component="img"

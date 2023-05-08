@@ -1,6 +1,6 @@
 import React, { useRef, useEffect } from 'react';
 import { Box, Card, CardMedia, Container, CssBaseline, Typography } from '@mui/material';
-import { MyContainer, MySlogan } from '../styles.js'
+import { MyContainer, MyTitle } from '../styles.js'
 import Footer from '../components/Footer.jsx';
 import Header from '../components/Header';
 
@@ -35,9 +35,9 @@ export default function NoPage() {
         {/* displays header image with page title */}
         <MyContainer maxWidth='sm' >
           <Card> 
-            <MySlogan align='center' sx={{ top: '15vh' }}>
+            <MyTitle align='center' sx={{ top: '15vh' }}>
               Error 404 page not found
-            </MySlogan>
+            </MyTitle>
             <Box sx={{ position: 'relative' }}>
               <CardMedia 
                 component="img"

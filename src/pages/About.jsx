@@ -1,12 +1,12 @@
 import React from 'react';
 import { CssBaseline, Container, Typography, Card, Box, CardMedia } from '@mui/material';
-import { MyContainer, MySlogan } from '../styles.js'
+import { MyContainer, MyTitle } from '../styles.js'
 import Footer from '../components/Footer.jsx';
 import Header from '../components/Header';
 
 /**
  * Renders the about page which provides information about the website and its purpose.
- * Includes a header, a slogan, and a description of the website.
+ * Includes a header, a Title, and a description of the website.
  * @returns {JSX.Element} The JSX code for the About page.
  */
 function About() {
@@ -17,9 +17,9 @@ function About() {
       <main>
       <MyContainer maxWidth='sm' >
         <Card>
-            <MySlogan align='center' sx={{ top: '15vh' }} >
+            <MyTitle align='center' sx={{ top: '15vh' }} >
                 About us
-            </MySlogan>
+            </MyTitle>
             <Box sx={{ position: 'relative' }}>
                 <CardMedia 
                     component="img"

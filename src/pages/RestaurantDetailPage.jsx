@@ -10,6 +10,7 @@ import { AppContext } from '../AppContext.jsx';
 import loading from '../image/loading.gif'
 import { Navigate } from 'react-router-dom';
 
+
 /**
  * A page to display the following information of a restaurant:
  * Images, name, phone, rating, cuisine, distance from user, walking time, operating hours of the week, link to menu (if any),
