@@ -11,7 +11,7 @@ export default function List() {
     // store any array of restaurants
     const [allRestaurants, setAllRestaurants] = React.useState([])
     // store an object of filter data
-    const { filterData } = React.useContext(AppContext) 
+    const { filterData, baseURL } = React.useContext(AppContext) 
 
     /**
      * Fetch user's current location and update the location state
@@ -83,7 +83,7 @@ export default function List() {
      */
     const getRestaurants = async() => {
         try{
-            const res = await fetch("http://localhost:9090/food_finder/restaurants", 
+            const res = await fetch(`${baseURL}/food_finder/restaurants`, 
             {
                 headers: {
                 "Content-Type": "application/json"

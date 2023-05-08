@@ -29,7 +29,7 @@ export default function RestaurantDetailPage() {
     const [restaurantInfo, setRestaurantInfo] = React.useState({})
     const [formData, setFormData] = React.useState({newRating: 0, newComment: ""})
     const [allReviews, setAllReviews] = React.useState([])
-    const { token, logout } = React.useContext(AppContext)
+    const { token, logout, baseURL } = React.useContext(AppContext)
     const [location, setLocation] = React.useState()
     const [noPage, setNoPage] = React.useState(false)
     const [open, setOpen] = React.useState(false);
@@ -109,7 +109,7 @@ export default function RestaurantDetailPage() {
      */
     const getRestaurantInfo = async() => {
         try{
-            const res = await fetch(`http://localhost:9090/food_finder/restaurants/${id}`, 
+            const res = await fetch(`${baseURL}/food_finder/restaurants/${id}`, 
             {
                 headers: {
                 "Content-Type": "application/json"
@@ -137,7 +137,7 @@ export default function RestaurantDetailPage() {
      */
     const getReviews = async() => {
         try{
-            const res = await fetch(`http://localhost:9090/food_finder/restaurants/reviews/${id}`)
+            const res = await fetch(`${baseURL}}/food_finder/restaurants/reviews/${id}`)
             if (res.status === 200) {
                 setAllReviews(await res.json())
             }
@@ -155,7 +155,7 @@ export default function RestaurantDetailPage() {
      */
     const handleSubmit = async() => {
         try{
-            const res = await fetch(`http://localhost:9090/food_finder/restaurants/reviews/${id}`, 
+            const res = await fetch(`${baseURL}/food_finder/restaurants/reviews/${id}`, 
             {
                 headers: {
                     "Content-Type": "application/json",

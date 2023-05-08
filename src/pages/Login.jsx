@@ -18,7 +18,7 @@ import 'react-toastify/dist/ReactToastify.css';
  */
 export default function Login() {
     // Retrieve the user object and login function from the AppContext
-    const { userObj, login } = React.useContext(AppContext)
+    const { userObj, login, baseURL } = React.useContext(AppContext)
     // React state to store user's input in object format, contains 2 properties: 
     // username and password
     const [formData, setFormData] = React.useState({
@@ -83,7 +83,7 @@ export default function Login() {
     const handleSubmit = async (event) => {
         event.preventDefault()
         try {
-            const res = await fetch("http://localhost:9090/food_finder/users/login", 
+            const res = await fetch(`${baseURL}/food_finder/users/login`, 
             {
                 headers: {
                   "Content-Type": "application/json"

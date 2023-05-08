@@ -10,8 +10,9 @@ import MenuItem from '@mui/material/MenuItem';
 import MenuList from '@mui/material/MenuList';
 import { AppContext } from "../AppContext";
 
+const options = ['Any cuisine', 'American', 'British', 'Caribbean', 'Chinese', 'French', 'Greek', 'Indian', 'Italian', 'Japanese', 'Korean', 'Mexican', 'Spanish', 'Thai', 'Turkish', 'Vietnamese'];
+
 export default function Dropdown() {
-  const options = ['Any cuisine', 'American', 'Brazilian', 'British', 'Caribbean', 'Chinese', 'French', 'Greek', 'Indian', 'Italian', 'Japanese', 'Korean', 'Mediterranean', 'Mexican', 'Middle Eastern', 'Peruvian', 'Spanish', 'Thai', 'Vietnamese'];
   /* This is a React functional component that creates a button with a dropdown menu. 
   The useState hook is used to set the initial state of open and selectedIndex to false and 0, respectively. 
   The anchorRef is used to reference the button. */

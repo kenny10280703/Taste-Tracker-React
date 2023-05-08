@@ -90,8 +90,10 @@ export const AppContextProvider = (props) => {
     }
   }
 
+  const baseURL = "http://localhost:9090"
+
   return (
-    <AppContext.Provider value={{ userObj, token, login, logout, filterData, updateFilter }}>
+    <AppContext.Provider value={{ userObj, token, login, logout, filterData, updateFilter, baseURL }}>
       {props.children}
     </AppContext.Provider>
   );

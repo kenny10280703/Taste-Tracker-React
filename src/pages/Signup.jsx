@@ -27,7 +27,7 @@ export default function Signup() {
         success: false,
         message: ""
     })
-    const { userObj } = React.useContext(AppContext)
+    const { userObj, baseURL } = React.useContext(AppContext)
     const mainRef = React.useRef(null);
     const headerRef = React.useRef(null);
 
@@ -64,7 +64,7 @@ export default function Signup() {
     const handleSubmit = async(event) => {
         event.preventDefault()
         try {
-            const res = await fetch("http://localhost:9090/food_finder/users/register", 
+            const res = await fetch(`${baseURL}/food_finder/users/register`, 
             {
                 headers: {
                     "Content-Type": "application/json"

@@ -17,7 +17,7 @@ export default function Map() {
     // store any array of restaurants
     const [allRestaurants, setAllRestaurants] = React.useState([])
     // store an object of filter data
-    const { filterData } = React.useContext(AppContext)
+    const { filterData, baseURL } = React.useContext(AppContext)
     // Determine a distance between the marker and cursor to trigger the hover effect
     const hoverDistance = 35
     
@@ -113,7 +113,7 @@ export default function Map() {
      */
     const getRestaurants = async() => {
     try{
-        const res = await fetch("http://localhost:9090/food_finder/restaurants", 
+        const res = await fetch(`${baseURL}/food_finder/restaurants`, 
         {
             headers: {
             "Content-Type": "application/json"
