@@ -183,7 +183,9 @@ export default function List() {
                                     <Typography gutterBottom>
                                         <MyBold>Average main price: </MyBold>£{restaurant.averageCostOfADish}
                                     </Typography>
-                                    <Button component={Link} to={"/restaurants/" + restaurant.id} variant='contained' size='small' color='primary' sx={{ mt: '7px' }} onClick={scrollToTop}>See more details</Button>
+                                    {/* When user click this button, will redirect user to the restaurant page with the correct restaurant id */}
+                                    <Button component={Link} to={"/restaurants/" + restaurant.id} variant='contained' size='small' 
+                                    color='primary' sx={{ mt: '7px' }} onClick={scrollToTop}>See more details</Button>
                                     </Container>
                                 </MyCardContent>
                             </MyCard>

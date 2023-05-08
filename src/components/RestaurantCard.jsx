@@ -26,6 +26,8 @@ export default function RestaurantCard(props) {
     const close = (event) => {
         props.close(event)
     }
+    // When user click this Restaurant Card Component, website will be able to dynamically open a restaurant page 
+    // with the correct restaurant id
     const url = `/restaurants/${id}`
 
 

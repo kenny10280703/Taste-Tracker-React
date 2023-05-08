@@ -18,11 +18,17 @@ import { Navigate } from 'react-router-dom';
  * @returns {JSX.Element} Returns the login page JSX element.
  */
 export default function RestaurantDetailPage() {
+    /* 
+    * UseParams from React Router Dom to get the id from url parameter.
+    * This id will be insert to the backend API to fetch information of restaurant with the correct id.
+    * If user is redirected to this page from Mapview or List view, the two components will be resposible to insert
+    * the correct restaurant id into the url.
+    */ 
     const { id } = useParams()
     const [restaurantInfo, setRestaurantInfo] = React.useState({})
     const [formData, setFormData] = React.useState({newRating: 0, newComment: ""})
     const [allReviews, setAllReviews] = React.useState([])
-    const { userObj, token, logout } = React.useContext(AppContext)
+    const { token, logout } = React.useContext(AppContext)
     const [location, setLocation] = React.useState()
     const [loaded, setLoaded] = React.useState(false)
     const [noPage, setNoPage] = React.useState(false)
@@ -65,6 +71,13 @@ export default function RestaurantDetailPage() {
         }
     }, [restaurantInfo])
 
+    /**
+     * Gets the user's current location using the Geolocation API and sets it as the component state.
+     * 
+     * @function
+     * @async
+     * @returns {void}
+     */
     const getLocation = () => {
         navigator.geolocation.getCurrentPosition( position => {
             setLocation({
@@ -78,6 +91,15 @@ export default function RestaurantDetailPage() {
         )
     }
 
+    /**
+     * Function to fetch backend API to send user's location, and then get restaurant information with a given id,
+     * the id is the parameter of the url of the webpage
+     * If successful, store in the React State getRestaurantInfo
+     * If failed to fetch the restaurant information, will set the noPage state to true
+     * 
+     * @async
+     * @returns {void}
+     */
     const getRestaurantInfo = async() => {
         try{
             const res = await fetch(`http://localhost:9090/food_finder/restaurants/${id}`, 
@@ -99,18 +121,31 @@ export default function RestaurantDetailPage() {
         }
     }
 
+    /**
+     * Function to fetch backend API to get an array of reviews, and store in the React State allReviews
+     * If failed to fetch reviews, will not display anything on the screen
+     * 
+     * @async
+     * @returns {void}
+     */
     const getReviews = async() => {
         try{
             const res = await fetch(`http://localhost:9090/food_finder/restaurants/reviews/${id}`)
             if (res.status === 200) {
                 setAllReviews(await res.json())
-            } else {
             }
         } catch (error) {
-            console.log("error")
+            console.log("Error fetching reviews")
         }
     }
 
+    /**
+     * Handles the submission of the new review, sends a POST request to the server.
+     * If successfully submitted, will get the list of reviews again to show the newly submited review by user.
+     * Otherwise, alert user with corresponding messages according to backend's response status.
+     * 
+     * @returns {void}
+     */
     const handleSubmit = async() => {
         try{
             const res = await fetch(`http://localhost:9090/food_finder/restaurants/reviews/${id}`, 
@@ -155,6 +190,7 @@ export default function RestaurantDetailPage() {
 
   return (
     <div>
+        {/* If no page is true, redirect user to error page */}
         {noPage && <Navigate replace to="../notexist"/>}
         <CssBaseline />
         <div ref={headerRef}>
