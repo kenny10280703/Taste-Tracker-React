@@ -1,5 +1,5 @@
-import React from 'react';
-import { CssBaseline, Container, Typography, Card, Box, CardMedia } from '@mui/material';
+import React, { useRef, useEffect } from 'react';
+import { Box, Card, CardMedia, Container, CssBaseline, Typography } from '@mui/material';
 import { MyContainer, MyTitle } from '../styles.js'
 import Footer from '../components/Footer.jsx';
 import Header from '../components/Header';
@@ -9,12 +9,31 @@ import Header from '../components/Header';
  * Includes a header, a Title, and a description of the website.
  * @returns {JSX.Element} The JSX code for the About page.
  */
+
+
 function About() {
+    /* Gets the height of the header and footer an subtracts it from the total height of the 
+    viewport so the footer is positioned at the bottom of the page */
+
+    const mainRef = useRef(null);
+    const headerRef = useRef(null);
+  
+    useEffect(() => {
+      const handleResize = () => {
+        mainRef.current.style.minHeight = `calc(100vh - ${headerRef.current.clientHeight + document.querySelector('footer').clientHeight}px)`;
+      };
+      handleResize();
+      window.addEventListener('resize', handleResize);
+      return () => window.removeEventListener('resize', handleResize);
+    }, []);
+
   return (
     <>
       <CssBaseline />
-      <Header />
-      <main>
+      <div ref={headerRef}>
+      <Header  />
+      </div>
+      <main ref={mainRef}>
       <MyContainer maxWidth='sm' >
         <Card>
             <MyTitle align='center' sx={{ top: '15vh' }} >

@@ -7,6 +7,7 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { MyContainer, MyTitle } from '../styles.js'
 import { Navigate } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
+import theme from '../theme'
 import 'react-toastify/dist/ReactToastify.css';
 
 /**
@@ -36,7 +37,7 @@ export default function Login() {
     viewport so the footer is positioned at the bottom of the page */
     const mainRef = React.useRef(null);
     const headerRef = React.useRef(null);
-    const theme = createTheme();
+    
 
     /**
      * This useEffect hook listens to the window resize event and updates the minHeight style
@@ -72,6 +73,11 @@ export default function Login() {
                 [name] : value
             }
         })
+        // clear the error message displayed if there are any
+        setStatus({
+          success: false,
+          message: ""
+        })
     }
 
     /**
@@ -98,6 +104,12 @@ export default function Login() {
                 const { userObj, token } = await res.json()
                 toast.success("Login successfully!")
                 login(userObj, token)
+            } else if(res.status === 403 || res.status === 404) {
+              /* To avoid malicious behaviour, system should not let specify wrong username or wrong password */
+              setStatus({
+                success: false,
+                message: "Invalid username/password"
+              })
             } else {
                 const data = await res.json()
                 const message = data.message

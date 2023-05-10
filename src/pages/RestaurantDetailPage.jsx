@@ -137,7 +137,7 @@ export default function RestaurantDetailPage() {
      */
     const getReviews = async() => {
         try{
-            const res = await fetch(`${baseURL}}/food_finder/restaurants/reviews/${id}`)
+            const res = await fetch(`${baseURL}/food_finder/restaurants/reviews/${id}`)
             if (res.status === 200) {
                 setAllReviews(await res.json())
             }
@@ -193,8 +193,8 @@ export default function RestaurantDetailPage() {
         })
     }
 
-    let{ name, overallRating, cuisine, address, averageCostOfADish, menuLink, distanceFromUser, 
-        imagesLink, approximateWalkingTimeFromUser, websiteLink, phoneNumber, operatingHoursOfTheWeek} = restaurantInfo
+    const { name, overallRating, cuisine, address, averageCostOfADish, menuLink, distanceFromUser, 
+        imagesLink, approximateWalkingTimeFromUser, phoneNumber, operatingHoursOfTheWeek} = restaurantInfo
 
   return (
     <div>
@@ -229,7 +229,7 @@ export default function RestaurantDetailPage() {
                                 src={`${link}?w=164&h=164&fit=crop&auto=format`}
                                 srcSet={`${link}?w=164&h=164&fit=crop&auto=format&dpr=2 2x`}
                                 alt={"Image of " + name}
-                                loading="lazy"
+                                loading="loading..."
                             />
                         </ImageListItem>
                         )
@@ -246,9 +246,9 @@ export default function RestaurantDetailPage() {
                 </Typography>
                 <Grid container>
                     <Grid item>
-                        <Stack spacing={1} sx={{ ml: 2, mt: 1, mb: 1 }}>
-                        <Rating name="rating" value={overallRating} precision={0.5} readOnly />
-                        </Stack>
+                    <Stack spacing={1} sx={{ ml: 2, mt: 1, mb: 1 }}>
+                         <Rating name="rating" value={overallRating || 0} precision={0.5} readOnly />
+                    </Stack>
                     </Grid>
                     <Grid item>
                         <Typography sx={{ ml: '5px', mt: '10px' }}>
