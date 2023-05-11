@@ -16,6 +16,7 @@ import 'react-toastify/dist/ReactToastify.css';
  * enter login page by url
  * 
  * @returns {JSX.Element} Returns the login page JSX element.
+ * @author Kenny Yeung, Connor Cliff
  */
 export default function Login() {
     // Retrieve the user object and login function from the AppContext

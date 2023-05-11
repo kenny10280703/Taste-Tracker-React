@@ -13,7 +13,7 @@ import { MyContainer, MySlogan } from '../styles';
  * and toggles between the two views when the toggle button is clicked.
  *
  * @return {JSX.Element} The JSX code for the Home component
- * @author Connor Cliff, Kenny Yeung
+ * @author Connor Cliff, Nyan Lin Naing
  */
 export default function Home() { 
   const [isMapView, setIsMapView] = React.useState(true);
