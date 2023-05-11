@@ -26,6 +26,8 @@ export default function Map() {
     const { filterData, baseURL } = React.useContext(AppContext)
     // Determine a distance between the marker and cursor to trigger the hover effect
     const hoverDistance = 35
+    // get the API key from the .env file
+    const apiKey = process.env.REACT_APP_GOOGLE_MAPS_API_KEY;
     
     /**
      * Fetch user's current location and update the centre state
@@ -191,7 +193,7 @@ export default function Map() {
                 * hoverDistance: Determine the distance between the marker and cursor to trigger the hover effect
                 */}
                 <GoogleMapReact
-                    bootstrapURLKeys={{ key: ""}}
+                    bootstrapURLKeys={{ key: apiKey}}
                     center={centre}
                     zoom={zoom}
                     hoverDistance={hoverDistance}
