@@ -33,16 +33,7 @@ export default function RestaurantDetailPage() {
     const { token, logout, baseURL } = React.useContext(AppContext)
     const [location, setLocation] = React.useState()
     const [noPage, setNoPage] = React.useState(false)
-    const [open, setOpen] = React.useState(false);
-    const handleClickOpen = () => {
-        setOpen(true);
-    };
-    const handleClose = () => {
-        setOpen(false);
-    };
 
-
-    
     /* Gets the height of the header and footer an subtracts it from the total height of the 
     viewport so the footer is positioned at the bottom of the page */
     const mainRef = React.useRef(null);
@@ -346,7 +337,6 @@ export default function RestaurantDetailPage() {
                            </div>
                         </CardContent>
                     </Card>
-                    {console.log(allReviews)}
                     {allReviews.map(review => {
                         return (<Review 
                             key={review.id}

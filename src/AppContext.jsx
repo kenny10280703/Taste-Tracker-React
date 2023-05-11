@@ -32,7 +32,6 @@ export const AppContextProvider = (props) => {
     const handleStorageChange = () => {
       setUserObj(JSON.parse(localStorage.getItem("userJSON")))
       setToken(localStorage.getItem("token"))
-      console.log(userObj)
     }
     window.addEventListener("storage", handleStorageChange)
     return () => {

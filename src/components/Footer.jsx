@@ -14,7 +14,7 @@ import { AppContext } from '../AppContext';
  * @author Nyan Lin Naing
  */
 function Footer() {
-    const { userObj, logout } = React.useContext(AppContext)
+    const { userObj } = React.useContext(AppContext)
   return (
     <>
     <CssBaseline />
