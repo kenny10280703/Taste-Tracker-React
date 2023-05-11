@@ -6,6 +6,12 @@ import loading from '../image/loading.gif'
 import { Typography } from '@mui/material'
 import UserLocation from './UserLocation';
 
+/**
+ * Render a map displaying markers for each restaurant using Google Map React with custom components on the map.
+ * 
+ * @returns {JSX.Element} 
+ * @author Kenny Yeung, Connor Cliff
+ */
 export default function Map() {
     /*
     * Store user's latitude and longitude in an array as Google Map React component take them as parameter in array format 
