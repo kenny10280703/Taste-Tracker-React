@@ -121,6 +121,7 @@ export default function Map() {
      */
     const getRestaurants = async() => {
     try{
+        // Food finder is our original name, but we changed at the very late phases of our project
         const res = await fetch(`${baseURL}/food_finder/restaurants`, 
         {
             headers: {

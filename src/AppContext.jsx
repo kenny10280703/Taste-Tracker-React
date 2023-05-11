@@ -71,7 +71,8 @@ export const AppContextProvider = (props) => {
    */
   const logout = async() => {
     try{
-      const res = await fetch("http://localhost:9090/food_finder/users/logout", {
+      // Food finder is our original name, but we changed at the very late phases of our project
+      const res = await fetch(`${baseURL}/food_finder/users/logout`, {
         headers: {
           "Content-Type": "application/json"
         },

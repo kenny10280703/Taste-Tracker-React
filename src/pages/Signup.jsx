@@ -65,6 +65,7 @@ export default function Signup() {
     const handleSubmit = async(event) => {
         event.preventDefault()
         try {
+            // Food finder is our original name, but we changed at the very late phases of our project
             const res = await fetch(`${baseURL}/food_finder/users/register`, 
             {
                 headers: {
