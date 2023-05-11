@@ -5,6 +5,12 @@ import { Link } from "react-router-dom";
 import loading from '../image/loading.gif'
 import { AppContext } from '../AppContext'
 
+/**
+ * Render a list of restaurants from the array of restaurants fetched by backend
+ * 
+ * @returns {JSX.Element} 
+ * @author Kenny Yeung, Connor Cliff
+ */
 export default function List() {
     // store the latitude and longitude of user
     const [location, setLocation] = React.useState()

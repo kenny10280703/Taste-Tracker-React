@@ -1,7 +1,10 @@
 import { createTheme, responsiveFontSizes } from '@mui/material';
 
-/* Sets the theme of the website */
-
+/**
+ * Sets the theme of the website
+ *
+ * @author Connor Cliff
+ */
 const theme = createTheme({
     palette: {
         primary: {

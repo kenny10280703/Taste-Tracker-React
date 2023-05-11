@@ -16,13 +16,14 @@ import { AppContextProvider } from './AppContext';
 import { ThemeProvider } from '@emotion/react';
 import { CssBaseline } from '@mui/material';
 import { ToastContainer } from 'react-toastify';
-
-
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
-/* 
-  AppContext as a React Context to allow access/modification of user object, toke, login function and logoit function
-*/
+/**
+ * Use React Router DOM to render components based on url.
+ * Added ToastContainer to make sure the toast could be shown in every page
+ * Added AppContextProvider to make sure all components can access data inside the AppContext
+ */
+
 root.render(
     <ThemeProvider theme={theme}>
         <CssBaseline />

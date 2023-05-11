@@ -10,6 +10,7 @@ import React from 'react'
  * @param {string} props.comment - The comment left by the user.
  *
  * @returns {JSX.Element} - A JSX element that displays a review card.
+ * @author Connor Cliff, Kenny Yeung
  */
 
 function Review(props) {

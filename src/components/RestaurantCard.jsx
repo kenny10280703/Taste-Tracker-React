@@ -13,6 +13,7 @@ import CloseIcon from '@mui/icons-material/Close';
  * @param {number} props.distanceFromUser - The distance from the user to the restaurant
  * @param {function} props.close - A callback function for hiding this restaurant card on the map
  * @returns {JSX.Element} - A component that displays the restaurant information
+ * @author Kenny Yeung
  */
 export default function RestaurantCard(props) {
     const { id, name, overallRating, imagesLink, distanceFromUser } = props.restaurantInfo

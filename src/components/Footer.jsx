@@ -4,12 +4,15 @@ import { Facebook, Instagram, Twitter } from '@mui/icons-material';
 import { Link } from "react-router-dom";
 import { AppContext } from '../AppContext';
 
-/* Renders a footer component with social media links and navigation buttons. */
-/* 
-Get the user's object from AppContext to determine if the user is logged in.
-If user is logged in, will hide the Login and Signup button
-*/
 
+/**
+ * Renders a footer component with social media links and navigation buttons.
+ * Get the user's object from AppContext to determine if the user is logged in.
+ * If user is logged in, will hide the Login and Signup button
+ * 
+ * @returns {JSX.Element}
+ * @author Nyan Lin Naing
+ */
 function Footer() {
     const { userObj, logout } = React.useContext(AppContext)
   return (

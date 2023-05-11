@@ -4,6 +4,7 @@ import React from 'react';
 /**
  * Context for App to allow different components to access and modify the data (works like a global variable)
  * @type {React.Context}
+ * @author Kenny Yeung
  */
 export const AppContext = React.createContext();
 

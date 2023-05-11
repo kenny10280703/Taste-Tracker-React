@@ -8,6 +8,7 @@ import Header from '../components/Header';
  * Renders the about page which provides information about the website and its purpose.
  * Includes a header, a Title, and a description of the website.
  * @returns {JSX.Element} The JSX code for the About page.
+ * @author Connor Cliff
  */
 
 

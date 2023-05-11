@@ -16,7 +16,8 @@ import { ToastContainer, toast } from 'react-toastify';
  * Images, name, phone, rating, cuisine, distance from user, walking time, operating hours of the week, link to menu (if any),
  * address, average main dish cost
  * 
- * @returns {JSX.Element} Returns the login page JSX element.
+ * @returns {JSX.Element}
+ * @author Kenny Yeung, Connor Cliff
  */
 export default function RestaurantDetailPage() {
     /* 

@@ -4,12 +4,15 @@ import { Link } from "react-router-dom";
 import { AppContext } from "../AppContext";
 import { ToastContainer, toast } from 'react-toastify';
 
+/**
+ * Renders a navigation bar component containing links to different pages.
+ * Retrieve the user's object from AppContext to determine if the user is logged in.
+ * If user is logged in, hides the Login and Signup button; display username and Logout button instead
+ * 
+ * @returns {JSX.Element} 
+ * @author Kenny Yeung, Connor Cliff
+ */
 function Navbar() {
-    /* 
-    Renders a navigation bar component containing links to different pages.
-    Retrieve the user's object from AppContext to determine if the user is logged in.
-    If user is logged in, hides the Login and Signup button; display username and Logout button instead
-    */
     const { userObj, logout } = React.useContext(AppContext)
     const [open, setOpen] = React.useState(false);
     const handleClickOpen = () => {

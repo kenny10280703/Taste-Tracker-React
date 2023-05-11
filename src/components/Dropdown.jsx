@@ -12,14 +12,19 @@ import { AppContext } from "../AppContext";
 
 const options = ['Any cuisine', 'American', 'British', 'Caribbean', 'Chinese', 'French', 'Greek', 'Indian', 'Italian', 'Japanese', 'Korean', 'Mexican', 'Spanish', 'Thai', 'Turkish', 'Vietnamese'];
 
+/**
+ * This is a React functional component that creates a button with a dropdown menu. 
+ * The useState hook is used to set the initial state of open and selectedIndex to false and 0, respectively. 
+ * The anchorRef is used to reference the button. 
+ * 
+ * @returns {JSX.Element}
+ * @author Connor Cliff, Kenny Yeung
+ */
 export default function Dropdown() {
-  /* This is a React functional component that creates a button with a dropdown menu. 
-  The useState hook is used to set the initial state of open and selectedIndex to false and 0, respectively. 
-  The anchorRef is used to reference the button. */
   const [open, setOpen] = React.useState(false)
   const anchorRef = React.useRef(null)
   const [selectedIndex, setSelectedIndex] = React.useState(0)
-  const { filterData, updateFilter } = React.useContext(AppContext)
+  const { updateFilter } = React.useContext(AppContext)
 
   /*These are functions that handle click events for the button and menu items, 
   toggling the state of open and selectedIndex, and closing the menu when a user clicks outside of it.*/

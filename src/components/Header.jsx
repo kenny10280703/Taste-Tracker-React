@@ -3,8 +3,13 @@ import { AppBar, Container, CssBaseline, Toolbar } from '@mui/material';
 import MyIconButton from '../styles.js';
 import Navbar from './Navbar';
 
-/* Renders a header component with a logo and a navigation bar. */
-
+/* . */
+/**
+ * Renders a header component with a logo and a navigation bar
+ * 
+ * @returns {JSX.Element} 
+ * @author Nyan Lin Naing
+ */
 function Header() {
   return (
     <>

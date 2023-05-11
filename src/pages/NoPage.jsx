@@ -4,8 +4,14 @@ import { MyContainer, MyTitle } from '../styles.js'
 import Footer from '../components/Footer.jsx';
 import Header from '../components/Header';
 
-/* This page is displayed when the user tries to access a page which does not exist */
+/* */
 
+/**
+ * This page is displayed when the user tries to access a page which does not exist 
+ * 
+ * @returns {JSX.Element} Returns the error page JSX element.
+ * @author Connor Cliff
+ */
 export default function NoPage() {
 
   /* Gets the height of the header and footer an subtracts it from the total height of the 

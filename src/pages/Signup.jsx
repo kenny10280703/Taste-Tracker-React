@@ -13,7 +13,8 @@ import { toast } from 'react-toastify';
 /**
  * Signup Component is a page containing a form used to register users into the system.
  *
- * @return {JSX.Element} Returns a JSX Element that renders a form.
+ * @return {JSX.Element}
+ * @author Kenny Yeung, Connor Cliff
  */
 export default function Signup() {
     const [formData, setFormData] = React.useState({

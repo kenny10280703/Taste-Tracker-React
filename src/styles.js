@@ -4,8 +4,11 @@ import { CardMedia, TextField, Typography, TableCell } from '@mui/material';
 import { IconButton } from '@mui/material';
 import { Link } from 'react-router-dom';
 
-/* Defines custom styled components */
-
+/**
+ * Defines custom styled components
+ *
+ * @author Connor Cliff
+ */
 export const MyContainer = styled('div')(({ theme }) => ({
     backgroundColor: theme.palette.background.paper,
     padding: theme.spacing(0, 0, 6),
