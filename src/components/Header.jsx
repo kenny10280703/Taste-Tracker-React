@@ -3,7 +3,6 @@ import { AppBar, Container, CssBaseline, Toolbar } from '@mui/material';
 import MyIconButton from '../styles.js';
 import Navbar from './Navbar';
 
-/* . */
 /**
  * Renders a header component with a logo and a navigation bar
  * 
