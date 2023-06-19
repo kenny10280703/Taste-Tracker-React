@@ -8,7 +8,7 @@ This is a university group project aimed at creating a website that displays res
 - This project used MUI to create visually appealing components.
 
 ## Demo
-https://github.com/kenny10280703/Taste-Tracker-React/blob/merged-with-mui/assets/Filters_demo.mp4
+https://youtu.be/7pbvFN5QIfM
 
 ## Features
 Interactive Map: The website utilizes Google Map React to display restaurants as markers on an interactive map. Users can click on a marker to view basic information about the restaurant and easily navigate to the restaurant's dedicated page for more details.
