@@ -30,3 +30,31 @@ https://github.com/kenny10280703/Taste-Tracker-React/assets/65498906/d6d02129-e0
 https://github.com/kenny10280703/Taste-Tracker-React/assets/65498906/2f7d2ff9-fedf-4304-99cd-098c115b41b0
 
 - Switching from List View to Map View, then open a restaurant page from Map View and try to leave a review without logging in
+
+https://github.com/kenny10280703/Taste-Tracker-React/assets/65498906/ad5c952e-afec-4a4e-9003-38ab0a0d8d7b
+
+- Signup Demo
+
+https://github.com/kenny10280703/Taste-Tracker-React/assets/65498906/079a98bf-7dd5-41cf-b7c4-d15b079b1c50
+
+- Login Demo
+
+https://github.com/kenny10280703/Taste-Tracker-React/assets/65498906/04e6a4ac-3ad5-4b98-90c4-46330f78ae26
+
+- Logout Demo
+
+https://github.com/kenny10280703/Taste-Tracker-React/assets/65498906/66ba0ca9-d35a-4166-a8d3-ef78d36971a7
+
+- Post Review Demo
+
+https://github.com/kenny10280703/Taste-Tracker-React/assets/65498906/51506c72-a7c1-4776-b457-84f9c2668568
+
+- Map View Filter Demo
+
+https://github.com/kenny10280703/Taste-Tracker-React/assets/65498906/5ee77b88-fe0d-4083-b727-a445d67fb329
+
+- List View Filter Demo
+
+
+
+
