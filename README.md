@@ -19,6 +19,7 @@ This is a university group project aimed at creating a website that displays res
 - **Restaurant Reviews**: Logged-in users can share their experiences by posting reviews for restaurants. This feature enables users to provide valuable feedback to the community and contribute to the restaurant discovery process.
 
 ## Demo
+- Sorry for spliting so many videos due to the video size limit (I do not want to compress the videos too much).
 ### Map View Demo
 https://github.com/kenny10280703/Taste-Tracker-React/assets/65498906/8616bbad-b2b2-4c65-a253-0b1ae06cc7a0
 
