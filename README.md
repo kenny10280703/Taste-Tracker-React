@@ -9,7 +9,16 @@ This is a university group project aimed at creating a website that displays res
 
 ## Demo
 https://github.com/kenny10280703/Taste-Tracker-React/assets/65498906/8616bbad-b2b2-4c65-a253-0b1ae06cc7a0
-Map View Video Demo
+
+- Map View Demo
+
+https://github.com/kenny10280703/Taste-Tracker-React/assets/65498906/d6d02129-e0a2-4155-960e-c0d21a3fa9c0
+
+- List View Demo
+
+https://github.com/kenny10280703/Taste-Tracker-React/assets/65498906/2f7d2ff9-fedf-4304-99cd-098c115b41b0
+
+- Switching from List View to Map View, then open a restaurant page from Map View and try to leave a review without logging in
 
 
 
